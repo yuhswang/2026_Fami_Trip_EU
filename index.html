@@ -603,21 +603,98 @@
                     timeline: [
                         { id: "1301", time: "09:00", event: "搭火車往薩爾斯堡", loc: "Munich Central Station", type: "transport", ticket: "", note: "車票在 Apple Wallet" },
                         { id: "1302", time: "13:00", event: "舊城區漫步", loc: "Getreidegasse", type: "sight", ticket: "", note: "" }
-                    ]
+                    ],
+                    hotelTicket: "https://drive.google.com/file/d/1aMuD0HNtbdzqGgrhj53rK59nBpagCRl4/view?usp=drive_link"
                 },
                 {
-                    date: "2/14", day: "週六", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00", timeline: [
-                        { id: "1401", time: "09:00", event: "米拉貝爾宮", loc: "Mirabell Palace", type: "sight", ticket: "", note: "" },
+                    date: "2/14", day: "週六", city: "薩爾斯堡", 
+                    hotel: "Altstadt Hotel Hofwirt", 
+                    breakfast: "7:00~10:00",
+                    startTime: "08:00", endTime: "22:00",
+                    timeline: [
                         {
-                            id: "1402", time: "11:45", event: "主教堂音樂會", loc: "Salzburg Cathedral", type: "music",
-                            ticket: [
-                                { name: "電子機票 (PDF)", url: "https://drive.google.com/..." },
-                                { name: "預辦登機網頁", url: "https://www.china-airlines.com/..." },
-                                { name: "保險單", url: "https://..." }
-                            ],
-                            note: "請提早15分鐘入場"
+                            id: "1401",
+                            time: "07:00",
+                            event: "米拉貝爾宮散步",
+                            loc: "Mirabell Gardens",
+                            type: "sight",
+                            note: "電影《真善美》拍攝地，早晨人煙較稀少好拍照。"
                         },
-                        { id: "1403", time: "20:00", event: "要塞音樂會", loc: "Fortress Hohensalzburg", type: "music", ticket: "", note: "" }
+                        {
+                            id: "1402",
+                            time: "08:30",
+                            event: "SPAR 超市採買",
+                            loc: "SPAR Trujic Salzburg",
+                            type: "shop",
+                            note: "買隔天午餐",
+                            hours:"07:15–18:00"
+                        },
+                        {
+                            id: "1403",
+                            time: "09:00",
+                            event: "莫札特故居",
+                            loc: "mozart's residence",
+                            type: "sight",
+                            note: "持 Salzburg Card 免費參觀",
+                            hours:"09:00–17:30"
+                        },
+                        {
+                            id: "1404",
+                            time: "09:40",
+                            event: "莫札特出生地",
+                            loc: "Mozarts Geburtshaus",
+                            type: "sight",
+                            note: "持 Salzburg Card 免費參觀\n格特萊德巷就在出生地旁邊，可以順便逛逛。",
+                            hours:"07:15–18:00"
+                        },
+                        {
+                            id: "1405",
+                            time: "10:30",
+                            event: "薩爾斯堡主教區",
+                            loc: "DomQuartier Salzburg",
+                            type: "sight",                            
+                            note: "音樂會前可以拍照/參觀"
+                        },
+                        {
+                            id: "1406",
+                            time: "11:45",
+                            event: "薩爾斯堡大教堂 音樂會",
+                            loc: "Salzburg Cathedral",
+                            type: "music",
+                            ticket: [
+                                { name: "音樂會入場票-1", url: "https://drive.google.com/file/d/1cAWy-7hJiItvWWDbTyqOJh9HVSAlngZw/view?usp=drive_link" },
+                                { name: "音樂會入場票-2", url: "https://drive.google.com/file/d/1zW7Li7I-YLWFtIkF67hdcRLpCsCoFlRp/view?usp=drive_link" }
+                            ],
+                            note: "提早15分鐘入場",
+                            hours:"09:00–17:00"
+                        },
+                        {
+                            id: "1407",
+                            time: "14:30",
+                            event: "格特萊德巷 逛街/下午茶",
+                            loc: "Getreidegasse",
+                            type: "food",
+                            note: "必看鑄鐵招牌。下午茶推薦 Café Tomaselli 或 Sacher。"
+                        },
+                        {
+                            id: "1408",
+                            time: "18:00",
+                            event: "薩爾茲堡晚餐",
+                            loc: "Salzburg Old Town",
+                            type: "food",
+                            note: "建議提早用餐，以利銜接晚上的要塞音樂會。"
+                        },
+                        {
+                            id: "1409",
+                            time: "20:00",
+                            event: "薩爾茲要塞 & 莫札特音樂會",
+                            loc: "Hohensalzburg Fortress",
+                            type: "music",
+                            ticket: [
+                            { name: "薩爾斯堡要塞莫札特最佳音樂會票", url: "https://drive.google.com/file/d/1y9IGkrxI0QTSYU9rzoWxC-R7-hG2j2C_/view?usp=drive_link" },
+                            ], 
+                            note: "需搭乘纜車上山。從要塞俯瞰薩爾斯堡夜景非常漂亮。"
+                        }
                     ]
                 },
                 {
@@ -863,10 +940,12 @@
                         const prevHotel = itineraryData[index - 1].hotel;
                         timelineNodes.push({
                             id: "start_" + item.date.replace('/',''),
-                            time: departureTime, // 讀取 startTime
+                            time: departureTime,
                             event: `從 ${prevHotel} 出發`,
                             loc: prevHotel, 
                             type: "hotel_start",
+                            // 將當天的早餐資訊傳遞進去
+                            breakfast: item.breakfast || "", 
                             ticket: "", note: ""
                         });
                     }
@@ -921,14 +1000,28 @@
                         // 只要「自訂備註」有字，或者「預設備註」有字，就顯示圖示
                         const showNoteIcon = (localNote && localNote.trim() !== "") || (staticNote.trim() !== "");
                         const noteIconHtml = showNoteIcon ? '<i class="fas fa-sticky-note text-gray-400 ml-1.5 text-xs"></i>' : '';
-
-
+                        
                         // 地圖連結
                         const mapIconHtml = getMapLinkHtml(event.loc);
                         
                         // 判斷是否顯示「明細」按鈕
                         const showBtn = (event.type !== 'hotel_start');
                         const eventId = event.id;
+
+                        // 處理營業時間 HTML
+                        const hoursHtml = event.hours 
+                            ? `<div class="text-[10px] text-gray-400 flex items-center mt-0.5">
+                                <i class="far fa-clock mr-1 text-[9px]"></i>${event.hours}
+                            </div>` 
+                            : '';
+
+
+                        // 新增：處理早餐顯示 HTML
+                        const breakfastHtml = (event.type === 'hotel_start' && event.breakfast) 
+                            ? `<div class="text-[10px] text-euro-secondary flex items-center mt-1 font-bold">
+                                <i class="fas fa-coffee mr-1 text-[9px]"></i>早餐：${event.breakfast}
+                            </div>` 
+                            : '';
 
                         timelineHtml += `
                         <div class="flex gap-3 relative">
@@ -941,10 +1034,13 @@
                                     ${event.time}
                                 </span>
                                 <div class="flex justify-between items-start gap-2">
-                                    <h4 class="text-base font-bold text-gray-800 leading-tight">
-                                        ${event.event} ${mapIconHtml} ${linkIconHtml} ${noteIconHtml}
-                                    </h4>
-                                    
+                                    <div>
+                                        <h4 class="text-base font-bold text-gray-800 leading-tight">
+                                            ${event.event} ${mapIconHtml} ${linkIconHtml} ${noteIconHtml}
+                                        </h4>
+                                        ${hoursHtml}
+                                        ${breakfastHtml}
+                                    </div>
                                     ${ showBtn ? 
                                     `<button onclick="openDetailModal('${eventId}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
                                         明細
