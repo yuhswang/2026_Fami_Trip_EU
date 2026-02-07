@@ -800,6 +800,33 @@
                     intro: "莫札特的故鄉，也是電影《真善美》的拍攝地。整個舊城區優雅而充滿藝術氣息。",
                     spots: ["米拉貝爾宮", "薩爾斯堡要塞", "格特萊德巷"],
                     food: ["薩爾斯堡舒芙蕾 (Nockerl)", "Bosna 咖哩香腸堡"],
+                    restaurants: [
+                        { 
+                            name: "☕ Café Tomaselli (老牌咖啡館)", 
+                            note: "奧地利最古老咖啡廳。推薦：由服務生端托盤自選蛋糕，莫札特也愛這家。",
+                            map: "https://maps.app.goo.gl/HT8x6i5jLgBQEMCh6"
+                        },
+                        { 
+                            name: "🍰 Café Sacher (薩赫蛋糕)", 
+                            note: "必點國寶級『薩赫巧克力蛋糕』。環境比維也納分店舒適，就在河畔旁。",
+                            map: "https://maps.app.goo.gl/u4GRuzRqG9P7Lh447"
+                        },
+                        { 
+                            name: "🌭 Balkan Grill (必吃排隊熱狗)", 
+                            note: "格特萊德巷弄內的小攤位，當地最有名的平價點心，鹹香解膩。",
+                            map: "https://maps.app.goo.gl/FSCPRkuhmBiF3rt48"
+                        },
+                        { 
+                            name: "🍽️ St. Peter Stiftskulinarium", 
+                            note: "歐洲最古老餐廳(西元803年)。氣氛極佳，適合想體驗精緻奧地利菜的長輩。",
+                            map: "https://maps.app.goo.gl/AqL7pibQKkTWBdY76"
+                        },
+                        { 
+                            name: "🍺 Sternbräu (平價舒適餐廳)", 
+                            note: "空間寬敞、有自己的釀酒廠。菜色多樣化，炸牛排與手工啤酒評價很高。",
+                            map: "https://maps.app.goo.gl/52vKpT5ANhzsnJDG6"
+                        }
+                    ],
                     shop: ["莫札特巧克力 (銀藍色包裝最正統)", "岩鹽"],
                     tips: "購買 Salzburg Card 非常划算，包含交通與景點門票。"
                 },
@@ -1224,6 +1251,21 @@
                 const data = cityGuides[cityKey];
                 const modalBody = document.getElementById('modalBody');
                 if (!data) return;
+
+                let restaurantHtml = '';
+                data.restaurants.forEach(restaurant => {
+                    restaurantHtml += `
+                        <div class="border-b border-gray-100 py-3 last:border-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-euro-text text-sm">${restaurant.name}</span>
+                                <a href="${restaurant.map}" target="_blank" class="text-blue-500 text-xs flex items-center">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>導航
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 leading-relaxed">${restaurant.note}</p>
+                        </div>
+                    `;
+                });
     
                 // Helper to generate list items
                 const renderList = (arr, icon) => arr ? arr.map(s => `<li class="mb-1"><i class="fas ${icon} text-euro-secondary text-xs mr-2"></i>${s}</li>`).join('') : '';
@@ -1238,8 +1280,12 @@
     
                     <div class="p-6">
                         <p class="text-gray-600 leading-relaxed mb-6 text-justify text-sm">${data.intro}</p>
-                        
-                        <div class="space-y-4">
+                        <div class="text-xs text-gray-500 bg-euro-light/30 p-3 rounded flex items-start">
+                            <i class="fas fa-exclamation-circle mr-2 mt-0.5 text-euro-secondary"></i>
+                            <span>${data.tips}</span>
+                        </div>
+
+                        <div class="mt-4 space-y-4">
                             <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-euro-primary">
                                 <h4 class="font-bold text-gray-800 text-sm mb-2">必訪景點</h4>
                                 <ul class="text-sm text-gray-600">${renderList(data.spots, 'fa-check')}</ul>
@@ -1252,11 +1298,10 @@
                                 <h4 class="font-bold text-gray-800 text-sm mb-2">必買購物</h4>
                                 <ul class="text-sm text-gray-600">${renderList(data.shop, 'fa-shopping-bag')}</ul>
                             </div>
-                        </div>
-    
-                        <div class="mt-4 text-xs text-gray-500 bg-euro-light/30 p-3 rounded flex items-start">
-                            <i class="fas fa-exclamation-circle mr-2 mt-0.5 text-euro-secondary"></i>
-                            <span>${data.tips}</span>
+                            <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-brown-300">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">餐廳推薦</h4>
+                                <div>${restaurantHtml}</div>
+                            </div>
                         </div>
     
                         <div class="mt-6 pt-4 border-t border-gray-100">
