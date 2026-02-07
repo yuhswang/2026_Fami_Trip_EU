@@ -573,11 +573,20 @@
             const itineraryData = [
                 {
                     date: "2/11", day: "週三", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", 
+                    hotelTicket: "https://drive.google.com/file/d/1STKYkF4877aFvAF0ABy_lfCr105BU1SZ/view?usp=drive_link",
                     startTime: "09:00", endTime: "20:30",
                     timeline: [
-                        { id: "1100", time: "07:50", event: "桃園機場起飛", loc: "Taoyuan Airport", type: "flight", ticket: "", note: "CI169 櫃台通常在 T1" },
-                        { id: "1101", time: "18:35", event: "抵達慕尼黑機場", loc: "MUC Airport", type: "flight", ticket: "", note: "" },
-                        { id: "1102", time: "19:30", event: "飯店 Check-in", loc: "Metropol by Maier Privathotels", type: "hotel", ticket: "", note: "訂房代號: #123456" }
+                        { id: "1100", time: "07:50", event: "桃園機場起飛", loc: "Taoyuan Airport", type: "flight", 
+                            ticket: [
+                                { name: "CHIUYUMEI_中文機票", url: "https://drive.google.com/file/d/1NztD-zBK_rpBpdplLjHrUUfG-hAWIH1X/view?usp=drive_link" },
+                                { name: "CHIUYUMEI_英文文機票", url: "https://drive.google.com/file/d/11p2VkumUkVSTNrDjiqcXPE1LrZDu2Fsv/view?usp=drive_link" },
+                                { name: "WANGYUHSIN_中文機票", url: "https://drive.google.com/file/d/1F4U0oaiwsBl3RaeL6og7KRinJlZ3wigY/view?usp=drive_link" },
+                                { name: "WANGYUHSIN_英文機票", url: "https://drive.google.com/file/d/16Iynz2v5N6S1iwULO3IqsoXz_kfv3MFH/view?usp=drive_link" },
+                            ],
+                            note: "" },
+                        { id: "1103", time: "11:20", event: "抵達仁川機場", loc: "仁川國際機場", type: "flight", ticket: "", note: "台灣時間+1" },
+                        { id: "1104", time: "13:30", event: "仁川機場起飛", loc: "仁川國際機場", type: "flight", ticket: "", note: "" },
+                        { id: "1101", time: "18:35", event: "抵達慕尼黑機場", loc: "MUC Airport", type: "flight", ticket: "", note: "" }                        
                     ]
                 },
                 {
@@ -907,35 +916,37 @@
 
                         // === 檢查備註圖示 ===
                         const localNote = localStorage.getItem('ticket_note_' + event.id);
-                        const showNoteIcon = (localNote && localNote.trim() !== '') || (event.note && event.note.trim() !== '');
-                        const noteIconHtml = showNoteIcon ? '<i class="fas fa-sticky-note text-gray-400 ml-1.5 text-xs"></i>' : '';
+                        const staticNote = event.note || "";
                         
+                        // 只要「自訂備註」有字，或者「預設備註」有字，就顯示圖示
+                        const showNoteIcon = (localNote && localNote.trim() !== "") || (staticNote.trim() !== "");
+                        const noteIconHtml = showNoteIcon ? '<i class="fas fa-sticky-note text-gray-400 ml-1.5 text-xs"></i>' : '';
+
+
                         // 地圖連結
                         const mapIconHtml = getMapLinkHtml(event.loc);
                         
                         // 判斷是否顯示「明細」按鈕
-                        const showBtn = (event.type !== 'hotel_start' && event.type !== 'hotel_end');
+                        const showBtn = (event.type !== 'hotel_start');
+                        const eventId = event.id;
 
                         timelineHtml += `
                         <div class="flex gap-3 relative">
                             ${!isLast ? '<div class="absolute left-3.5 top-8 bottom-[-12px] w-0.5 bg-gray-200 z-0"></div>' : ''}
-                            
                             <div class="relative z-10 w-7 h-7 flex-shrink-0 bg-euro-bg border border-euro-secondary rounded-full flex items-center justify-center text-euro-secondary text-xs">
                                 <i class="fas ${icon}"></i>
                             </div>
-                            
                             <div class="flex-1 pb-6">
                                 <span class="text-xs font-bold text-gray-400 font-mono bg-gray-100 px-1 rounded inline-block mb-1">
                                     ${event.time}
                                 </span>
-
                                 <div class="flex justify-between items-start gap-2">
                                     <h4 class="text-base font-bold text-gray-800 leading-tight">
                                         ${event.event} ${mapIconHtml} ${linkIconHtml} ${noteIconHtml}
                                     </h4>
                                     
                                     ${ showBtn ? 
-                                    `<button onclick="openDetailModal('${event.id}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
+                                    `<button onclick="openDetailModal('${eventId}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
                                         明細
                                     </button>` 
                                     : ''}
@@ -979,69 +990,76 @@
                 currentDetailId = id;
                 document.getElementById('detailTitle').innerText = title;
                 document.getElementById('detailId').value = id;
-    
-                // 1. 讀取與設定備註
+                
+                // --- 1. 讀取靜態資料 (優先判定是否為自動生成的飯店節點) ---
                 let staticData = { ticket: "", note: "" };
+                
                 itineraryData.forEach(day => {
-                    const found = day.timeline.find(t => t.id === id);
-                    if (found) staticData = found;
+                    const dayIdStr = day.date.replace('/', '');
+                    
+                    // 檢查是否為該天的「回到飯店」 ID (格式: end_211)
+                    if (id === "end_" + dayIdStr) {
+                        staticData = {
+                            ticket: day.hotelTicket || "",
+                            note: day.hotelNote || ""
+                        };
+                    } else {
+                        // 否則在一般的 timeline 找 ID
+                        const found = day.timeline.find(t => t.id === id);
+                        if (found) staticData = found;
+                    }
                 });
-    
+
+                // --- 2. 處理備註內容 (LocalStorage 優先) ---
                 const savedNote = localStorage.getItem('ticket_note_' + id);
-                document.getElementById('detailNote').value = savedNote !== null ? savedNote : staticData.note;
-    
-                // 2. 處理「靜態預設票券」 (顯示為可點擊按鈕)
+                if (savedNote !== null && savedNote.trim() !== "") {
+                    document.getElementById('detailNote').value = savedNote;
+                } else {
+                    document.getElementById('detailNote').value = staticData.note || "";
+                }
+
+                // --- 3. 處理靜態預設票券顯示 ---
                 const staticContainer = document.getElementById('staticLinksContainer');
                 staticContainer.innerHTML = '';
                 let hasStatic = false;
-    
+
                 if (staticData.ticket) {
-                    const tickets = Array.isArray(staticData.ticket) ? staticData.ticket : [{ name: "預設票券", url: staticData.ticket }];
+                    // 支援字串或陣列格式
+                    const tickets = Array.isArray(staticData.ticket) ? staticData.ticket : [{name: "飯店憑證/票券", url: staticData.ticket}];
                     tickets.forEach(t => {
                         const btn = document.createElement('a');
                         btn.href = t.url;
                         btn.target = "_blank";
                         btn.className = "flex items-center justify-center w-full bg-euro-light/50 text-euro-text border border-euro-light py-2 rounded-lg hover:bg-euro-secondary hover:text-white transition shadow-sm text-sm font-bold mb-2";
-                        btn.innerHTML = `<i class="fas fa-ticket-alt mr-2"></i> ${t.name || "預設票券"}`;
+                        btn.innerHTML = `<i class="fas fa-hotel mr-2 text-xs"></i> ${t.name || "查看憑證"}`;
                         staticContainer.appendChild(btn);
                     });
                     hasStatic = true;
                 }
-    
-                // 3. 處理「自訂連結」 (顯示為輸入框)
+
+                // --- 4. 處理自訂連結 (輸入框) ---
                 const customContainer = document.getElementById('customLinksContainer');
                 customContainer.innerHTML = '';
-    
-                // 從 LocalStorage 讀取 JSON 字串
                 const rawLinks = localStorage.getItem('ticket_custom_links_' + id);
                 let customLinks = [];
                 try {
                     customLinks = rawLinks ? JSON.parse(rawLinks) : [];
-                    // 相容性處理：如果舊資料是純字串 URL，轉成物件
-                    if (!Array.isArray(customLinks) && rawLinks.startsWith('http')) {
-                        customLinks = [{ title: "自訂連結", url: rawLinks }];
-                    }
-                } catch (e) { console.error("Data parse error", e); }
-    
-                // 產生輸入欄位
-                customLinks.forEach(link => {
-                    addCustomLinkRow(link.title, link.url);
-                });
-    
-                // 4. 控制分隔線顯示
+                } catch (e) { console.error(e); }
+
+                customLinks.forEach(link => addCustomLinkRow(link.title, link.url));
+
+                // 控制分隔線與預設輸入框
                 const divider = document.getElementById('linkDivider');
                 if (hasStatic) {
                     divider.classList.remove('hidden');
-                    // 如果沒有自訂連結，預設開一個空的給使用者填
-                    if (customLinks.length === 0) addCustomLinkRow('', '');
                 } else {
                     divider.classList.add('hidden');
-                    if (customLinks.length === 0) addCustomLinkRow('', '');
+                    if(customLinks.length === 0) addCustomLinkRow('', '');
                 }
-    
+
                 document.getElementById('detailModal').classList.add('open');
             }
-    
+            
             // 輔助函式：新增一行自訂連結輸入框
             function addCustomLinkRow(title = '', url = '') {
                 const container = document.getElementById('customLinksContainer');
