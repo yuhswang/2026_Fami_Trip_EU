@@ -4,7 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>2026 歐洲家族旅遊</title>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="歐洲行程2026">
+        <title>春遊歐洲2026</title>
 
         <script src="https://cdn.tailwindcss.com"></script>
 
@@ -702,10 +706,102 @@
                     ]
                 },
                 {
-                    date: "2/15", day: "週日", city: "國王湖", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00", timeline: [
-                        { id: "1501", time: "08:30", event: "巴士往國王湖", loc: "Salzburg Hauptbahnhof", type: "transport", ticket: "", note: "使用 Salzburg Card" },
-                        { id: "1502", time: "10:00", event: "國王湖遊船", loc: "Königssee", type: "sight", ticket: "", note: "" },
-                        { id: "1503", time: "12:00", event: "紅蔥頭教堂午餐", loc: "St. Bartholomew's Church", type: "food", ticket: "", note: "" }
+                    date: "2/15", day: "週日", city: "國王湖", 
+					hotel: "Altstadt Hotel Hofwirt", 
+                    breakfast: "7:00~10:00",
+                    startTime: "07:30", endTime: "22:00",
+                    timeline: [
+						{ 
+							id: "1501", 
+							time: "07:30", 
+							event: "搭車去薩爾斯堡中央車站", 
+							loc: "Salzburg Hauptbahnhof", 
+							type: "transport", 
+							ticket: "", 
+							note: "假日怕沒位置到發車站搭\n使用 Salzburg Card" 
+						},
+                        {
+                            id: "1502",
+                            time: "08:10",
+                            event: "[840公車] 薩爾斯堡火車站 → 國王湖",
+                            loc: "國王湖",
+                            type: "transport",
+                            ticket: [
+                                { 
+                                    name: "840公車時刻表", 
+                                    url: "https://richard.at/wp-content/uploads/2025/12/FP-SVV-Linie840_Bus840_Salzburg_Hauptbahnhof%E2%80%93Anif%E2%80%93Marktschellenberg%E2%80%93Berchtesgaden%E2%80%93Unterstein%E2%80%93K%C3%B6nigssee%E2%80%93Jennerbahn_WINTERFAHRPLAN_WINTERTIMETABLE_14.12.2025-23.05.2026.pdf" 
+                                }
+                            ],
+                            note: "08:10發車\n 一日票 14.1€ (只收現金)\n 假日最早班次為 08:10，下一班為 08:40\n建議坐在右側 風景較佳"
+                        },
+                        {
+                            id: "1503",
+                            time: "09:45",
+                            event: "搭乘國王湖遊船",
+                            loc: "Schifffahrt Königssee",
+                            type: "sight",
+                            ticket: [
+                                {
+                                    name: "船班時刻表",
+                                    url: "https://www.seenschifffahrt.de/fileadmin/user_upload/Fahrplaene/KS_timetable_winter.pdf"
+                                }
+                            ],
+                            note: "選右邊位置\n返程: 最晚搭11:35班次"
+                        },
+                        {
+                            id: "1504",
+                            time: "12:00",
+                            event: "耶拿山纜車",
+                            loc: "Jennerbahn",
+                            type: "sight",
+                            ticket: [
+                                {
+                                    name: "即時影像",
+                                    url: "https://www.jennerbahn.de/en/webcam/"
+                                }
+                            ],
+                            note: "可買船票+纜車套票 56€",
+                            hours:"9:30 ~16:30"
+                        },
+                        {
+                            id: "1505",
+                            time: "14:50",
+                            event: "貝西特斯加登鹽礦",
+                            loc: "Salt Mine Berchtesgaden",
+                            type: "sight",
+                            note: "最晚搭13:56公車出發",
+							ticket: [
+								{
+									name: "鹽礦門票",
+									url: "https://drive.google.com/open?id=1gdQIQYLt0Smsu807PwRZ2cuw0nfmDXPQ"
+                                }
+							]
+                        },
+                        {
+                            id: "1506",
+                            time: "17:45",
+                            event: "[840公車] 貝西特斯加登 → 薩爾斯堡舊城區",
+                            loc: "薩爾斯堡舊城區",
+                            type: "transport",
+                            note: "最晚搭17:45公車出發\n 使用一日票\n 建議坐在左側 風景較佳"
+                        },
+						{
+                            id: "1507",
+                            time: "18:00",
+                            event: "薩爾茲堡晚餐",
+                            loc: "Salzburg Old Town",
+                            type: "food",
+                            note: ""
+                        },
+						{
+                            id: "1508",
+                            time: "20:00",
+                            event: "僧侶山電梯 欣賞夜景",
+                            loc: "僧侶山電梯",
+                            type: "sight",
+                            note: "",
+							hours: "08:00 ~ 21:00"
+                        },
                     ]
                 },
                 {
@@ -1305,7 +1401,7 @@
                         </div>
     
                         <div class="mt-6 pt-4 border-t border-gray-100">
-                            <button onclick="closeModal('cityModal')" class="w-full bg-gray-100 text-gray-500 text-sm font-medium py-3 rounded-lg hover:bg-gray-200 transition active:scale-95 tracking-wide">
+                            <button onclick="closeModal('cityModal')" class="w-full bg-gray-200 text-gray-500 text-sm font-medium py-3 rounded-lg hover:bg-gray-300 transition active:scale-95 tracking-wide">
                                 關閉導覽
                             </button>
                         </div>
