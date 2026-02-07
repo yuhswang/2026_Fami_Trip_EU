@@ -140,6 +140,10 @@
                 left: 0;
                 color: #A98467;
             }
+
+            .note-block {
+                word-break: break-all; /* 防止長網址或長英文撐破版面 */
+            }
         </style>
     </head>
 
@@ -992,15 +996,20 @@
                         
                         const showLinkIcon = hasStaticLink || hasCustomLink;
                         const linkIconHtml = showLinkIcon ? '<i class="fas fa-link text-euro-secondary ml-1.5 text-xs"></i>' : '';
-
-                        // === 檢查備註圖示 ===
+                                            
+                        // === 處理備註顯示 (直接顯示版本) ===
                         const localNote = localStorage.getItem('ticket_note_' + event.id);
                         const staticNote = event.note || "";
-                        
-                        // 只要「自訂備註」有字，或者「預設備註」有字，就顯示圖示
-                        const showNoteIcon = (localNote && localNote.trim() !== "") || (staticNote.trim() !== "");
-                        const noteIconHtml = showNoteIcon ? '<i class="fas fa-sticky-note text-gray-400 ml-1.5 text-xs"></i>' : '';
-                        
+                        const finalNote = (localNote && localNote.trim() !== "") ? localNote : staticNote;
+
+                        // 如果有備註，產生一個小字區塊
+                        const noteBlockHtml = (finalNote && finalNote.trim() !== "") 
+                            ? `<div class="text-[11px] text-gray-500 mt-1.5 flex items-start leading-relaxed bg-gray-50 p-2 rounded border-l-2 border-gray-200 whitespace-pre-wrap">
+                                <i class="fas fa-pen text-[9px] mt-1 mr-2 opacity-50"></i>
+                                <div class="flex-1">${finalNote}</div>
+                            </div>` 
+                            : '';
+
                         // 地圖連結
                         const mapIconHtml = getMapLinkHtml(event.loc);
                         
@@ -1036,10 +1045,11 @@
                                 <div class="flex justify-between items-start gap-2">
                                     <div>
                                         <h4 class="text-base font-bold text-gray-800 leading-tight">
-                                            ${event.event} ${mapIconHtml} ${linkIconHtml} ${noteIconHtml}
+                                            ${event.event} ${mapIconHtml} ${linkIconHtml}
                                         </h4>
-                                        ${hoursHtml}
                                         ${breakfastHtml}
+                                        ${hoursHtml}
+                                        ${noteBlockHtml}
                                     </div>
                                     ${ showBtn ? 
                                     `<button onclick="openDetailModal('${eventId}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
