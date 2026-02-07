@@ -1,801 +1,1206 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>2026 歐洲家族旅遊</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        euro: {
-                            bg: '#FDFCF8',       // 暖奶油白
-                            card: '#FFFFFF',     // 純白
-                            text: '#3D3D3D',     // 深灰
-                            primary: '#5F6F52',  // 鼠尾草綠
-                            secondary: '#A98467',// 皮革棕
-                            light: '#EFEAD8',    // 淺卡其
-                            link: '#d97706',     // 連結色(琥珀)
-                            accent: '#C75B5B',   // 警示紅
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>2026 歐洲家族旅遊</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            euro: {
+                                bg: '#FDFCF8', // 暖奶油白
+                                card: '#FFFFFF', // 純白
+                                text: '#3D3D3D', // 深灰
+                                primary: '#5F6F52', // 鼠尾草綠
+                                secondary: '#A98467', // 皮革棕
+                                light: '#EFEAD8', // 淺卡其
+                                link: '#d97706', // 連結色(琥珀)
+                                accent: '#C75B5B', // 警示紅
+                            }
+                        },
+                        fontFamily: {
+                            serif: [
+                                '"Playfair Display"', 'serif'
+                            ],
+                            sans: ['"Noto Sans TC"', 'sans-serif']
                         }
-                    },
-                    fontFamily: {
-                        serif: ['"Playfair Display"', 'serif'],
-                        sans: ['"Noto Sans TC"', 'sans-serif'],
                     }
                 }
             }
-        }
-    </script>
-    
-    <style>
-        body {
-            background-color: #FDFCF8;
-            color: #3D3D3D;
-            font-family: 'Noto Sans TC', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            padding-bottom: 90px; /* Space for bottom nav */
-        }
-        h1, h2, h3, .serif-font { font-family: 'Playfair Display', serif; font-family: 'Noto Sans TC', sans-serif; }
-        .title-text { font-family: 'Noto Sans TC', sans-serif; font-weight: 700; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
-        .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .nav-item.active { color: #5F6F52; }
-        .nav-item.active span { font-weight: 700; }
-        .euro-shadow { box-shadow: 0 6px 20px -4px rgba(95, 111, 82, 0.15); }
-        
-        /* Modal */
-        .modal { transition: opacity 0.3s ease-in-out; opacity: 0; pointer-events: none; }
-        .modal.open { opacity: 1; pointer-events: auto; }
-        .modal-content { transform: scale(0.95); transition: transform 0.3s ease-in-out; }
-        .modal.open .modal-content { transform: scale(1); }
+        </script>
 
-        /* Custom Bullet Points */
-        .check-list li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
-        .check-list li::before { content: '\f00c'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: #A98467; }
-    </style>
-</head>
-<body class="antialiased min-h-screen relative selection:bg-euro-primary selection:text-white">
-
-    <header class="bg-euro-bg/95 backdrop-blur-md sticky top-0 z-40 px-5 py-4 flex justify-between items-end border-b border-euro-light shadow-sm">
-        <div>
-            <h1 class="text-2xl font-bold text-euro-primary italic serif-font">Europe 2026</h1>
-            <p class="text-sm text-euro-secondary tracking-widest mt-1">德奧捷匈 • 家族旅遊</p>
-        </div>
-        <div class="text-right">
-            <span id="headerDate" class="text-sm text-gray-400 font-medium"></span>
-        </div>
-    </header>
-
-    <main class="p-4 max-w-lg mx-auto">
-
-        <div id="tab-flight" class="tab-content">
-            <h2 class="text-2xl font-bold text-center mb-6 text-euro-primary title-text">航班資訊</h2>
-
-            <div class="bg-white rounded-xl overflow-hidden euro-shadow mb-8">
-                <div class="bg-euro-secondary p-3 text-white flex justify-between items-center">
-                    <span class="font-bold"><i class="fas fa-plane-departure mr-2"></i>去程 (2/11)</span>
-                    <span class="text-xs bg-white/20 px-2 py-1 rounded">約 17h</span>
-                </div>
-                
-                <div class="p-5 border-b border-gray-100">
-                    <div class="relative pl-6 pb-6 border-l-2 border-gray-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-primary border-2 border-white"></div>
-                        <div class="flex justify-between mb-1"><span class="font-bold text-xl">07:50 TPE</span><span class="text-gray-500 font-mono">CI 169</span></div>
-                        <div class="text-sm text-gray-500">TPE T1 <i class="fas fa-long-arrow-alt-right mx-2"></i> ICN T2</div>
-                    </div>
-                    <div class="relative pl-6 pb-6 border-l-2 border-dashed border-gray-300">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
-                        <div class="text-sm font-bold text-euro-secondary">仁川 (ICN) 轉機 2h 10m</div>
-                    </div>
-                    <div class="relative pl-6 border-l-2 border-gray-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-primary border-2 border-white"></div>
-                        <div class="flex justify-between mb-1"><span class="font-bold text-xl">13:30 ICN</span><span class="text-gray-500 font-mono">LH 719</span></div>
-                        <div class="text-sm text-gray-500">ICN T1 <i class="fas fa-long-arrow-alt-right mx-2"></i> MUC T2</div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-5 space-y-4">
-                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
-                        <h4 class="font-bold text-euro-primary mb-2 text-sm"><i class="fas fa-exchange-alt mr-2"></i>仁川轉機攻略</h4>
-                        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">                            
-                            <li><strong>轉機：</strong>
-                                <a href='https://www.airport.kr/ap_ch/1659/subview.do' target='_blank' class='text-euro-secondary underline hover:text-euro-primary'>仁川機場轉機指南</a>
-                            </li>
-                            <li><strong>安檢：</strong>轉機需再次通過安檢，水需倒掉。</li>
-                            <li><strong>設施：</strong>T2 設有免費淋浴間、Nap Zone (躺椅休息區)。</li>
-                            <li><strong>體驗：</strong>韓國文化體驗館可免費做手工藝。</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
-                        <h4 class="font-bold text-euro-primary mb-2 text-sm"><i class="fas fa-subway mr-2"></i>慕尼黑機場 (MUC) 入境</h4>
-                        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
-                            <li><strong>特色：</strong>世界唯一設有釀酒廠的機場 (Airbräu)。</li>
-                            <li><strong>交通：</strong>出關後跟著綠色 <span class="bg-green-600 text-white px-1 rounded text-[10px]">S</span> (S-Bahn) 指標。</li>
-                            <li><strong>路線：</strong>搭乘 <strong>S1</strong> 或 <strong>S8</strong> 線皆可抵達中央車站 (Hauptbahnhof)，約 40 分鐘。</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl overflow-hidden euro-shadow mb-6">
-                <div class="bg-euro-primary p-3 text-white flex justify-between items-center">
-                    <span class="font-bold"><i class="fas fa-plane-arrival mr-2"></i>回程 (2/27)</span>
-                    <span class="text-xs bg-white/20 px-2 py-1 rounded">約 16h</span>
-                </div>
-                
-                <div class="p-5 border-b border-gray-100">
-                    <div class="relative pl-6 pb-6 border-l-2 border-gray-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-secondary border-2 border-white"></div>
-                        <div class="flex justify-between mb-1"><span class="font-bold text-xl">23:25 VIE</span><span class="text-gray-500 font-mono">OS 007</span></div>
-                        <div class="text-sm text-gray-500">VIE T3 <i class="fas fa-long-arrow-alt-right mx-2"></i> BKK</div>
-                    </div>
-                    <div class="relative pl-6 pb-6 border-l-2 border-dashed border-gray-300">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
-                        <div class="text-sm font-bold text-euro-secondary">曼谷 (BKK) 轉機 2h 20m</div>
-                    </div>
-                    <div class="relative pl-6 border-l-2 border-gray-200">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-secondary border-2 border-white"></div>
-                        <div class="flex justify-between mb-1"><span class="font-bold text-xl">17:50 BKK</span><span class="text-gray-500 font-mono">CI 836</span></div>
-                        <div class="text-sm text-gray-500">BKK <i class="fas fa-long-arrow-alt-right mx-2"></i> TPE T1</div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-5 space-y-4">
-                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
-                        <h4 class="font-bold text-euro-primary mb-2 text-sm"><i class="fas fa-shopping-bag mr-2"></i>維也納機場 (VIE) 離境</h4>
-                        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
-                            <li><strong>交通：</strong>從中央車站搭 <strong>RJ (Railjet)</strong> 直達機場最快 (15分鐘)。</li>
-                            <li><strong>購物：</strong>必買 Manner 威化餅、莫札特巧克力、施華洛世奇。</li>
-                            <li><strong>退稅：</strong>請預留 3 小時，海關蓋章隊伍通常很長。</li>
-                        </ul>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
-                        <h4 class="font-bold text-euro-primary mb-2 text-sm"><i class="fas fa-spa mr-2"></i>曼谷轉機攻略</h4>
-                        <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
-                            <li><strong>美食：</strong>轉機區有 Mango Sticky Rice (芒果糯米)。</li>
-                            <li><strong>放鬆：</strong>若時間充裕，可體驗泰式肩頸按摩。</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-plan" class="tab-content active">
-            <div id="itinerary-list" class="space-y-6">
-                </div>
-        </div>
-
-        <div id="tab-guide" class="tab-content">
-            <h2 class="text-2xl font-bold text-center mb-4 text-euro-primary title-text">城市導覽</h2>
-            <p class="text-center text-xs text-gray-400 mb-6">點擊城市卡片查看詳細攻略</p>
-            <div class="grid grid-cols-2 gap-4">
-                <div onclick="openCityModal('munich')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/Munich.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">慕尼黑</div>
-                        </div>
-                    </div>
-                </div>
-                <div onclick="openCityModal('salzburg')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/Salzburg.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">薩爾斯堡</div>
-                        </div>
-                    </div>
-                </div>
-                <div onclick="openCityModal('hallstatt')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/Hallstatt.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">哈修塔特</div>
-                        </div>
-                    </div>
-                </div>
-                <div onclick="openCityModal('ck')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/ck.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">CK小鎮</div>
-                        </div>
-                    </div>
-                </div>
-                <div onclick="openCityModal('prague')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/prague.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">布拉格</div>
-                        </div>
-                    </div>
-                </div>
-                <div onclick="openCityModal('budapest')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/budapest.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">布達佩斯</div>
-                        </div>
-                    </div>
-                </div>
-                 <div onclick="openCityModal('vienna')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition col-span-2 group">
-                    <div class="h-32 relative overflow-hidden">
-                        <img src="./img/vienna.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
-                            <div class="text-white font-bold text-lg">維也納</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-lists" class="tab-content">
-            <div class="bg-euro-card rounded-xl p-5 mb-6 euro-shadow border border-euro-light">
-                <h3 class="font-bold text-xl mb-4 text-euro-primary border-b border-gray-100 pb-2">行前檢查表</h3>
-                <div id="checklist-container" class="space-y-3"></div>
-            </div>
-        </div>
-
-        <div id="tab-info" class="tab-content">
-            <h2 class="text-2xl font-bold text-center mb-6 text-euro-primary title-text">資訊中心</h2>
-
-            <div class="mb-8">
-                <h3 class="font-bold text-gray-700 mb-3 px-1"><i class="fas fa-cloud-sun text-euro-secondary mr-2"></i>當地天氣</h3>
-                <div class="grid grid-cols-3 gap-2">
-                    <a href="https://www.accuweather.com/zh-tw/de/munich/80331/weather-forecast/178086" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
-                        <div class="text-xs text-gray-400">德國</div>
-                        <div class="font-bold text-euro-text">慕尼黑</div>
-                    </a>
-                    <a href="https://www.accuweather.com/zh-tw/at/salzburg/5020/weather-forecast/29272" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
-                        <div class="text-xs text-gray-400">奧地利</div>
-                        <div class="font-bold text-euro-text">薩爾斯堡</div>
-                    </a>
-                    <a href="https://www.accuweather.com/zh-tw/cz/prague/125594/weather-forecast/125594" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
-                        <div class="text-xs text-gray-400">捷克</div>
-                        <div class="font-bold text-euro-text">布拉格</div>
-                    </a>
-                    <a href="https://www.accuweather.com/zh-tw/hu/budapest/187423/weather-forecast/187423" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
-                        <div class="text-xs text-gray-400">匈牙利</div>
-                        <div class="font-bold text-euro-text">布達佩斯</div>
-                    </a>
-                    <a href="https://www.accuweather.com/zh-tw/at/vienna/1010/weather-forecast/31868" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
-                        <div class="text-xs text-gray-400">奧地利</div>
-                        <div class="font-bold text-euro-text">維也納</div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl p-5 mb-8 euro-shadow border-l-4 border-euro-primary">
-                <h3 class="font-bold text-euro-primary mb-3 text-lg"><i class="fas fa-shield-alt mr-2"></i>富邦產險資訊</h3>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between border-b border-gray-100 pb-2">
-                        <span class="text-gray-500">保單號碼</span>
-                        <span class="font-mono font-bold">0500-1234ABCD (範例)</span>
-                    </div>
-                    <div class="flex justify-between border-b border-gray-100 pb-2">
-                        <span class="text-gray-500">海外緊急救援</span>
-                        <a href="tel:+886223459292" class="font-bold text-blue-600">+886-2-2345-9292</a>
-                    </div>
-                    <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
-                        <strong class="text-gray-800">理賠提醒：</strong><br>
-                        若遇班機延誤或行李遺失，請務必索取「航空公司證明」。若遇生病就醫，請保留「診斷證明」與「收據正本」。
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-[#FFF5F5] rounded-xl p-5 mb-6 border border-red-100">
-                <h3 class="font-bold text-red-900 mb-4 text-lg"><i class="fas fa-passport mr-2"></i>台灣駐外辦事處</h3>
-                
-                <div class="space-y-4">
-                    <div>
-                        <div class="font-bold text-red-900 text-sm mb-1"><span class="mr-2">🇩🇪</span>駐慕尼黑辦事處 (德國)</div>
-                        <div class="pl-6 text-sm text-gray-600">
-                            <div class="mb-1"><i class="fas fa-phone-alt w-5 text-gray-400"></i> <a href="tel:+49895126790" class="underline">+49-89-5126-790</a></div>
-                            <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+49-175-570-8059</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="font-bold text-red-900 text-sm mb-1"><span class="mr-2">🇦🇹</span>駐奧地利代表處 (維也納)</div>
-                        <div class="pl-6 text-sm text-gray-600">
-                            <div class="mb-1"><i class="fas fa-phone-alt w-5 text-gray-400"></i> <a href="tel:+4312124720" class="underline">+43-1-212-4720</a></div>
-                            <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+43-664-345-0455</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="font-bold text-red-900 text-sm mb-1"><span class="mr-2">🇨🇿</span>駐捷克代表處 (布拉格)</div>
-                        <div class="pl-6 text-sm text-gray-600">
-                            <div class="mb-1"><i class="fas fa-phone-alt w-5 text-gray-400"></i> <a href="tel:+420233320606" class="underline">+420-233-320-606</a></div>
-                            <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+420-603-166-707</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="font-bold text-red-900 text-sm mb-1"><span class="mr-2">🇭🇺</span>駐匈牙利代表處 (布達佩斯)</div>
-                        <div class="pl-6 text-sm text-gray-600">
-                            <div class="mb-1"><i class="fas fa-phone-alt w-5 text-gray-400"></i> <a href="tel:+3612662884" class="underline">+36-1-266-2884</a></div>
-                            <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+36-30-964-1601</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-4 pt-4 border-t border-red-200 text-center">
-                    <span class="text-sm font-bold text-red-900">歐盟通用急難電話：112</span>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <div id="cityModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div class="modal-content bg-white w-full max-w-md max-h-[85vh] rounded-2xl shadow-2xl relative flex flex-col overflow-hidden">
-            
-            <button onclick="closeModal('cityModal')" class="absolute top-3 right-3 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 z-50 shadow-sm backdrop-blur-md transition-transform active:scale-90">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-            
-            <div id="modalBody" class="overflow-y-auto flex-1 overscroll-contain">
-                </div>
-        </div>
-    </div>
-
-    <div id="detailModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-        <div class="modal-content bg-white w-full max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl relative flex flex-col">
-            <div class="bg-euro-primary p-4 text-white rounded-t-2xl flex justify-between items-center sticky top-0 z-10">
-                <h3 class="font-bold text-lg" id="detailTitle">詳細資訊</h3>
-                <button onclick="closeModal('detailModal')" class="text-white/80 hover:text-white"><i class="fas fa-times text-xl"></i></button>
-            </div>
-            <div class="p-5 overflow-y-auto">
-                <input type="hidden" id="detailId">
-                <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100">
-                    <h4 class="font-bold text-gray-700 mb-2 text-sm"><i class="fab fa-google-drive mr-2 text-euro-secondary"></i>票券/雲端檔案</h4>
-                    <p class="text-xs text-gray-400 mb-2">請貼上 Google Drive 或 PDF 連結</p>
-                    <div id="linkDisplayArea" class="mb-3 hidden">
-                        <a id="fileLinkBtn" href="#" target="_blank" class="block w-full text-center bg-euro-secondary text-white py-2 rounded-lg hover:bg-euro-primary transition shadow-sm mb-2"><i class="fas fa-external-link-alt mr-2"></i> 開啟雲端檔案</a>
-                        <button onclick="clearLink()" class="text-xs text-red-400 underline w-full text-center">移除連結</button>
-                    </div>
-                    <div id="linkInputArea"><input type="text" id="ticketLinkInput" class="w-full bg-white border border-gray-300 rounded px-3 py-2 text-sm mb-2 focus:outline-none focus:border-euro-secondary" placeholder="https://drive.google.com/..."></div>
-                </div>
-                <div>
-                    <h4 class="font-bold text-gray-700 mb-2 text-sm"><i class="fas fa-pen mr-2 text-euro-secondary"></i>備註資訊</h4>
-                    <textarea id="detailNote" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 text-sm focus:outline-none focus:ring-1 focus:ring-euro-secondary" rows="5" placeholder="輸入訂位代號、注意事項..."></textarea>
-                </div>
-            </div>
-            <div class="p-4 border-t border-gray-100 bg-gray-50 rounded-b-2xl">
-                <button onclick="saveDetail()" class="w-full bg-euro-primary text-white py-3 rounded-xl font-bold shadow-md active:scale-95 transition">儲存修改</button>
-            </div>
-        </div>
-    </div>
-
-    <nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-2 py-2 flex justify-between items-center z-40 text-gray-400 pb-5">
-        <button onclick="switchTab('plan')" class="nav-item active flex flex-col items-center gap-1 w-1/5" data-target="plan"><i class="fas fa-calendar-alt text-xl mb-0.5"></i><span class="text-[10px]">行程</span></button>
-        <button onclick="switchTab('flight')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="flight"><i class="fas fa-plane text-xl mb-0.5"></i><span class="text-[10px]">航班</span></button>
-        <button onclick="switchTab('guide')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="guide"><i class="fas fa-book-open text-xl mb-0.5"></i><span class="text-[10px]">導覽</span></button>
-        <button onclick="switchTab('lists')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="lists"><i class="fas fa-check-square text-xl mb-0.5"></i><span class="text-[10px]">清單</span></button>
-        <button onclick="switchTab('info')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="info"><i class="fas fa-info-circle text-xl mb-0.5"></i><span class="text-[10px]">資訊</span></button>
-    </nav>
-
-    <script>
-        // ================= ITINERARY DATA =================
-        const itineraryData = [
-            { date: "2/11", day: "週三", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", timeline: [
-                { id: "1100", time: "07:50", event: "桃園機場起飛", loc: "Taoyuan Airport", type: "flight", ticket: "", note: "CI169 櫃台通常在 T1" },
-                { id: "1101", time: "18:35", event: "抵達慕尼黑機場", loc: "MUC Airport", type: "flight", ticket: "", note: "" },
-                { id: "1102", time: "19:30", event: "飯店 Check-in", loc: "Metropol by Maier Privathotels", type: "hotel", ticket: "", note: "訂房代號: #123456" }
-            ]},
-            { date: "2/12", day: "週四", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", timeline: [
-                { id: "1201", time: "09:00", event: "瑪麗亞廣場", loc: "Marienplatz", type: "sight", ticket: "", note: "" },
-                { id: "1202", time: "12:00", event: "皇家啤酒屋午餐", loc: "Hofbräuhaus München", type: "food", ticket: "", note: "" },
-                { id: "1203", time: "14:00", event: "慕尼黑王宮", loc: "Munich Residenz", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/13", day: "週五", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", timeline: [
-                { id: "1301", time: "09:00", event: "搭火車往薩爾斯堡", loc: "Munich Central Station", type: "transport", ticket: "", note: "車票在 Apple Wallet" },
-                { id: "1302", time: "13:00", event: "舊城區漫步", loc: "Getreidegasse", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/14", day: "週六", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", timeline: [
-                { id: "1401", time: "09:00", event: "米拉貝爾宮", loc: "Mirabell Palace", type: "sight", ticket: "", note: "" },
-                { id: "1402", time: "11:45", event: "主教堂音樂會", loc: "Salzburg Cathedral", type: "music", ticket: "", note: "請提早15分鐘入場" },
-                { id: "1403", time: "20:00", event: "要塞音樂會", loc: "Fortress Hohensalzburg", type: "music", ticket: "", note: "" }
-            ]},
-            { date: "2/15", day: "週日", city: "國王湖", hotel: "Altstadt Hotel Hofwirt", timeline: [
-                { id: "1501", time: "08:30", event: "巴士往國王湖", loc: "Salzburg Hauptbahnhof", type: "transport", ticket: "", note: "使用 Salzburg Card" },
-                { id: "1502", time: "10:00", event: "國王湖遊船", loc: "Königssee", type: "sight", ticket: "", note: "" },
-                { id: "1503", time: "12:00", event: "紅蔥頭教堂午餐", loc: "St. Bartholomew's Church", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/16", day: "週一", city: "哈修塔特", hotel: "Heritage Hotel Hallstatt", timeline: [
-                { id: "1601", time: "09:00", event: "前往哈修塔特", loc: "Hallstatt", type: "transport", ticket: "", note: "" },
-                { id: "1602", time: "11:00", event: "明信片觀景點", loc: "Classic Village Viewpoint Hallstatt", type: "sight", ticket: "", note: "" },
-                { id: "1603", time: "14:00", event: "鹽礦纜車", loc: "Salzwelten Hallstatt", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/17", day: "週二", city: "庫倫洛夫", hotel: "Hotel Dvořák Český Krumlov", timeline: [
-                { id: "1701", time: "10:00", event: "包車前往 CK", loc: "Český Krumlov", type: "transport", ticket: "", note: "司機 Mr. Novak" },
-                { id: "1702", time: "13:00", event: "彩繪塔", loc: "Český Krumlov Castle", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/18", day: "週三", city: "布拉格", hotel: "Art Deco Imperial Hotel", timeline: [
-                { id: "1801", time: "13:00", event: "前往布拉格", loc: "Prague", type: "transport", ticket: "", note: "" },
-                { id: "1802", time: "17:00", event: "帝國咖啡館", loc: "Café Imperial", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/19", day: "週四", city: "布拉格", hotel: "Grandium Hotel Prague", timeline: [
-                { id: "1901", time: "09:00", event: "查理大橋", loc: "Charles Bridge", type: "sight", ticket: "", note: "" },
-                { id: "1902", time: "10:30", event: "天文鐘", loc: "Old Town Square", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/20", day: "週五", city: "布拉格", hotel: "Grandium Hotel Prague", timeline: [
-                { id: "2001", time: "09:00", event: "布拉格城堡", loc: "Prague Castle", type: "sight", ticket: "", note: "" },
-                { id: "2002", time: "10:30", event: "聖維特大教堂", loc: "St. Vitus Cathedral", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/21", day: "週六", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", timeline: [
-                { id: "2101", time: "09:00", event: "火車往布達佩斯", loc: "Prague Main Station", type: "transport", ticket: "", note: "" },
-                { id: "2102", time: "16:00", event: "紐約咖啡館", loc: "New York Café", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/22", day: "週日", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", timeline: [
-                { id: "2201", time: "09:00", event: "聖伊什特萬聖殿", loc: "St. Stephen's Basilica", type: "sight", ticket: "", note: "" },
-                { id: "2202", time: "18:00", event: "多瑙河遊船", loc: "Danube River Budapest", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/23", day: "週一", city: "布達佩斯", hotel: "Novotel Budapest Danube", timeline: [
-                { id: "2301", time: "09:00", event: "漁人堡", loc: "Fisherman's Bastion", type: "sight", ticket: "", note: "" },
-                { id: "2302", time: "19:00", event: "國會大廈夜景", loc: "Hungarian Parliament Building", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/24", day: "週二", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", timeline: [
-                { id: "2401", time: "09:00", event: "火車往維也納", loc: "Budapest Keleti", type: "transport", ticket: "", note: "" },
-                { id: "2402", time: "13:00", event: "熊布朗宮", loc: "Schönbrunn Palace", type: "sight", ticket: "", note: "" }
-            ]},
-            { date: "2/25", day: "週三", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", timeline: [
-                { id: "2501", time: "09:00", event: "霍夫堡皇宮", loc: "Hofburg", type: "sight", ticket: "", note: "" },
-                { id: "2502", time: "16:00", event: "中央咖啡館", loc: "Café Central", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/26", day: "週四", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", timeline: [
-                { id: "2601", time: "09:00", event: "百水公寓", loc: "Hundertwasserhaus", type: "sight", ticket: "", note: "" },
-                { id: "2602", time: "18:00", event: "維也納肋排", loc: "Ribs of Vienna", type: "food", ticket: "", note: "" }
-            ]},
-            { date: "2/27", day: "週五", city: "返程", hotel: "飛機上", timeline: [
-                { id: "2701", time: "20:00", event: "前往機場", loc: "Vienna International Airport", type: "transport", ticket: "", note: "" },
-                { id: "2702", time: "23:25", event: "搭機返台", loc: "VIE Airport", type: "flight", ticket: "", note: "" }
-            ]}
-        ];
-
-        // ================= CITY GUIDE DATA =================
-        const cityGuides = {
-            munich: { 
-                title: "慕尼黑 Munich", 
-                img: "./img/Munich.jpg",
-                intro: "德國巴伐利亞邦首府，也是啤酒節的故鄉。這裡有古老的建築、豪邁的豬腳與啤酒。",
-                spots: ["瑪麗亞廣場", "皇家啤酒屋", "慕尼黑王宮"],
-                food: ["德國豬腳 (Haxn)", "白香腸 (Weisswurst)", "一公升啤酒"],
-                shop: ["Rimowa 行李箱", "百靈油 (China Oel)", "DM藥妝"],
-                tips: "地鐵票進站前務必在打票機打卡，否則視為逃票。"
-            },
-            salzburg: { 
-                title: "薩爾斯堡 Salzburg", 
-                img: "./img/Salzburg.jpg",
-                intro: "莫札特的故鄉，也是電影《真善美》的拍攝地。整個舊城區優雅而充滿藝術氣息。",
-                spots: ["米拉貝爾宮", "薩爾斯堡要塞", "格特萊德巷"],
-                food: ["薩爾斯堡舒芙蕾 (Nockerl)", "Bosna 咖哩香腸堡"],
-                shop: ["莫札特巧克力 (銀藍色包裝最正統)", "岩鹽"],
-                tips: "購買 Salzburg Card 非常划算，包含交通與景點門票。"
-            },
-            hallstatt: { 
-                title: "哈修塔特 Hallstatt", 
-                img: "./img/Hallstatt.jpg",
-                intro: "被譽為「世界最美小鎮」，依山傍水，宛如童話仙境。",
-                spots: ["明信片觀景點", "古老鹽礦", "人骨教堂"],
-                food: ["烤鱒魚 (來自哈修塔特湖)", "奶油捲"],
-                shop: ["手工鹽罐", "木製工藝品"],
-                tips: "遊客非常多，建議清晨或傍晚散步最舒服。"
-            },
-            ck: { 
-                title: "庫倫洛夫 CK", 
-                img: "./img/ck.jpg",
-                intro: "波西米亞童話小鎮。伏爾塔瓦河呈S型蜿蜒流過，橘紅色的屋頂是這裡的標誌。",
-                spots: ["彩繪塔", "城堡橋廊", "地窖餐廳"],
-                food: ["地窖烤肉", "肉桂煙囪捲 (Trdelník)"],
-                shop: ["菠丹妮 (Botanicus) 手工皂", "刺蝟筆"],
-                tips: "全城都是石板路，非常難拖行李，請輕裝簡行。"
-            },
-            prague: {
-                title: "布拉格 Prague",
-                img: "./img/prague.jpg",
-                intro: "捷克首都，千塔之城。擁有古老的橋樑、教堂和金色塔樓。",
-                spots: ["查理大橋", "天文鐘", "布拉格城堡"],
-                food: ["烤鴨佐紫甘藍", "皮爾森啤酒"],
-                shop: ["曼菲蘿 (Manufaktura) 啤酒花保養品", "水晶玻璃"],
-                tips: "人多的地方(如查理大橋)請務必將背包背在前面，小心扒手。"
-            },
-            budapest: {
-                title: "布達佩斯 Budapest",
-                img: "./img/budapest.jpg",
-                intro: "多瑙河明珠，由布達與佩斯組成。夜景金碧輝煌，被譽為歐洲最美。",
-                spots: ["漁人堡", "國會大廈", "塞切尼溫泉"],
-                food: ["匈牙利牛肉湯 (Goulash)", "鵝肝料理"],
-                shop: ["紅椒粉 (Paprika)", "貴腐酒 (Tokaji)"],
-                tips: "地鐵手扶梯速度非常快，搭乘時請握緊扶手。"
-            },
-            vienna: { 
-                title: "維也納 Vienna", 
-                img: "./img/vienna.jpg",
-                intro: "奧地利首都，昔日哈布斯堡王朝中心。充滿皇家氣派與咖啡文化。",
-                spots: ["霍夫堡", "熊布朗宮", "中央咖啡館"],
-                food: ["維也納炸牛排 (Schnitzel)", "薩赫蛋糕 (Sacher Torte)"],
-                shop: ["Manner 威化餅", "小紅帽咖啡豆"],
-                tips: "週日商店幾乎全關，採買請避開週日。" 
+        <style>
+            body {
+                background-color: #FDFCF8;
+                color: #3D3D3D;
+                font-family: 'Noto Sans TC', sans-serif;
+                -webkit-tap-highlight-color: transparent;
+                padding-bottom: 90px;
+                /* Space for bottom nav */
             }
-        };
 
-        const defaultChecklist = [
-            { id: 1, text: "護照 (效期>6個月)", done: false },
-            { id: 2, text: "歐元現金/信用卡", done: false },
-            { id: 3, text: "網卡/E-SIM", done: false },
-            { id: 4, text: "轉接頭(雙圓孔)", done: false },
-            { id: 5, text: "常備藥品", done: false }
-        ];
-
-        // ================= INIT & UTILS =================
-        document.addEventListener('DOMContentLoaded', function() {
-            renderItinerary();
-            loadChecklist();
-            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
-            document.getElementById('headerDate').innerText = new Date().toLocaleDateString('zh-TW', options);
-            // 初始載入定位
-            scrollToToday();
-        });
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.querySelector(`.nav-item[data-target="${tabId}"]`).classList.add('active');
-            // 如果是切換到行程表，則自動捲動
-            if (tabId === 'plan') {
-                scrollToToday();
-            } else {
-                window.scrollTo(0,0);
+            h1,
+            h2,
+            h3,
+            .serif-font {
+                font-family: 'Playfair Display', serif;
+                font-family: 'Noto Sans TC', sans-serif;
             }
-        }
 
-        function getMapLinkHtml(name) {
-            const query = encodeURIComponent(name);
-            const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
-            return `<a href="${url}" target="_blank" class="map-link inline-flex items-center justify-center text-euro-link ml-1.5 hover:text-euro-primary transition-transform"><i class="fas fa-map-marker-alt text-base"></i></a>`;
-        }
+            .title-text {
+                font-family: 'Noto Sans TC', sans-serif;
+                font-weight: 700;
+            }
 
-        // ================= PLAN RENDERING =================
-        function renderItinerary() {
-            const container = document.getElementById('itinerary-list');
-            let html = '';
-            
-            itineraryData.forEach((item, index) => {
-                let timelineNodes = [];
-                // Hotel Start Logic
-                if (index > 0 && !item.timeline[0].event.includes("起飛")) {
-                    const prevHotel = itineraryData[index - 1].hotel;
-                    timelineNodes.push({ id: "start_" + item.date.replace('/',''), time: "08:30", event: `從 ${prevHotel} 出發`, loc: prevHotel, type: "hotel_start", ticket: "", note: "" });
-                }
-                // Events
-                timelineNodes = timelineNodes.concat(item.timeline);
-                // Hotel End Logic
-                if (!item.timeline[item.timeline.length-1].event.includes("搭機")) {
-                    timelineNodes.push({ id: "end_" + item.date.replace('/',''), time: "20:00", event: `回到 ${item.hotel}`, loc: item.hotel, type: "hotel_end", ticket: "", note: "" });
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            .tab-content {
+                display: none;
+                animation: fadeIn 0.4s ease-out;
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
                 }
 
-                let timelineHtml = '';
-                timelineNodes.forEach((event, idx) => {
-                    const isLast = idx === timelineNodes.length - 1;
-                    let icon = 'fa-circle';
-                    if (event.type === 'flight') icon = 'fa-plane';
-                    if (event.type === 'food') icon = 'fa-utensils';
-                    if (event.type === 'hotel' || event.type === 'hotel_end') icon = 'fa-bed';
-                    if (event.type === 'hotel_start') icon = 'fa-walking';
-                    if (event.type === 'transport') icon = 'fa-train';
-                    if (event.type === 'music') icon = 'fa-music';
-                    if (event.type === 'sight') icon = 'fa-camera';
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
 
-                    // Links & Notes Logic
-                    const storedLink = localStorage.getItem('ticket_link_' + event.id);
-                    const finalLink = storedLink !== null ? storedLink : event.ticket;
-                    const hasLink = finalLink ? '<i class="fas fa-link text-euro-secondary ml-1"></i>' : '';
+            .nav-item.active {
+                color: #5F6F52;
+            }
 
-                    const storedNote = localStorage.getItem('ticket_note_' + event.id);
-                    const finalNote = storedNote !== null ? storedNote : event.note;
-                    const hasNote = finalNote ? '<i class="fas fa-sticky-note text-gray-400 ml-1"></i>' : '';
-                    
-                    const mapIconHtml = getMapLinkHtml(event.loc);
+            .nav-item.active span {
+                font-weight: 700;
+            }
 
-                    timelineHtml += `
-                    <div class="flex gap-3 relative">
-                        ${!isLast ? '<div class="absolute left-3.5 top-8 bottom-[-12px] w-0.5 bg-gray-200 z-0"></div>' : ''}
-                        <div class="relative z-10 w-7 h-7 flex-shrink-0 bg-euro-bg border border-euro-secondary rounded-full flex items-center justify-center text-euro-secondary text-xs"><i class="fas ${icon}"></i></div>
-                        <div class="flex-1 pb-6 flex justify-between items-start">
-                            <div>
-                                <span class="text-xs font-bold text-gray-400 font-mono bg-gray-100 px-1 rounded">${event.time}</span>
-                                <h4 class="text-base font-bold text-gray-800 mt-0.5 leading-tight">${event.event} ${mapIconHtml} ${hasLink} ${hasNote}</h4>
+            .euro-shadow {
+                box-shadow: 0 6px 20px -4px rgba(95, 111, 82, 0.15);
+            }
+
+            /* Modal */
+            .modal {
+                transition: opacity 0.3s ease-in-out;
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .modal.open {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .modal-content {
+                transform: scale(0.95);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .modal.open .modal-content {
+                transform: scale(1);
+            }
+
+            /* Custom Bullet Points */
+            .check-list li {
+                position: relative;
+                padding-left: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .check-list li::before {
+                content: '\f00c';
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                position: absolute;
+                left: 0;
+                color: #A98467;
+            }
+        </style>
+    </head>
+
+    <body class="antialiased min-h-screen relative selection:bg-euro-primary selection:text-white">
+
+        <header class="bg-euro-bg/95 backdrop-blur-md sticky top-0 z-40 px-5 py-4 flex justify-between items-end border-b border-euro-light shadow-sm">
+            <div>
+                <h1 class="text-2xl font-bold text-euro-primary italic serif-font">Europe 2026</h1>
+                <p class="text-sm text-euro-secondary tracking-widest mt-1">德奧捷匈 • 春節旅遊</p>
+            </div>
+            <div class="text-right">
+                <span id="headerDate" class="text-sm text-gray-400 font-medium"></span>
+            </div>
+        </header>
+
+        <main class="p-4 max-w-lg mx-auto">
+
+            <div id="tab-flight" class="tab-content">
+                <h2 class="text-2xl font-bold text-center mb-6 text-euro-primary title-text">航班資訊</h2>
+
+                <div class="bg-white rounded-xl overflow-hidden euro-shadow mb-8">
+                    <div class="bg-euro-secondary p-3 text-white flex justify-between items-center">
+                        <span class="font-bold">
+                            <i class="fas fa-plane-departure mr-2"></i>去程 (2/11)</span>
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">約 17h</span>
+                    </div>
+
+                    <div class="p-5 border-b border-gray-100">
+                        <div class="relative pl-6 pb-6 border-l-2 border-gray-200">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-primary border-2 border-white"></div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-xl">07:50 TPE</span>
+                                <span class="text-gray-500 font-mono">CI 169</span>
                             </div>
-                            ${ (event.type !== 'hotel_start' && event.type !== 'hotel_end') ? 
-                            `<button onclick="openDetailModal('${event.id}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-1 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 ml-2">明細</button>` : ''}
+                            <div class="text-sm text-gray-500">TPE T1
+                                <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                                ICN
+                                                                                            T2</div>
+                        </div>
+                        <div class="relative pl-6 pb-6 border-l-2 border-dashed border-gray-300">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
+                            <div class="text-sm font-bold text-euro-secondary">仁川 (ICN) 轉機 2h 10m</div>
+                        </div>
+                        <div class="relative pl-6 border-l-2 border-gray-200">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-primary border-2 border-white"></div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-xl">13:30 ICN</span>
+                                <span class="text-gray-500 font-mono">LH 719</span>
+                            </div>
+                            <div class="text-sm text-gray-500">ICN T1
+                                <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                                MUC
+                                                                                            T2</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 space-y-4">
+                        <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-euro-primary mb-2 text-sm">
+                                <i class="fas fa-exchange-alt mr-2"></i>仁川轉機攻略</h4>
+                            <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                <li>
+                                    <strong>轉機：</strong>
+                                    <a href='https://www.airport.kr/ap_ch/1659/subview.do' target='_blank' class='text-euro-secondary underline hover:text-euro-primary'>仁川機場轉機指南</a>
+                                </li>
+                                <li>
+                                    <strong>安檢：</strong>轉機需再次通過安檢，水需倒掉。</li>
+                                <li>
+                                    <strong>設施：</strong>T2 設有免費淋浴間、Nap Zone (躺椅休息區)。</li>
+                                <li>
+                                    <strong>體驗：</strong>韓國文化體驗館可免費做手工藝。</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-euro-primary mb-2 text-sm">
+                                <i class="fas fa-subway mr-2"></i>慕尼黑機場
+                                                                                                    (MUC) 入境</h4>
+                            <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                <li>
+                                    <strong>特色：</strong>世界唯一設有釀酒廠的機場 (Airbräu)。</li>
+                                <li>
+                                    <strong>交通：</strong>出關後跟著綠色
+                                    <span class="bg-green-600 text-white px-1 rounded text-[10px]">S</span>
+                                    (S-Bahn) 指標。</li>
+                                <li>
+                                    <strong>路線：</strong>搭乘
+                                    <strong>S1</strong>
+                                    或
+                                    <strong>S8</strong>
+                                    線皆可抵達中央車站
+                                                                                                        (Hauptbahnhof)，約 40 分鐘。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden euro-shadow mb-6">
+                    <div class="bg-euro-primary p-3 text-white flex justify-between items-center">
+                        <span class="font-bold">
+                            <i class="fas fa-plane-arrival mr-2"></i>回程 (2/27)</span>
+                        <span class="text-xs bg-white/20 px-2 py-1 rounded">約 16h</span>
+                    </div>
+
+                    <div class="p-5 border-b border-gray-100">
+                        <div class="relative pl-6 pb-6 border-l-2 border-gray-200">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-secondary border-2 border-white"></div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-xl">23:25 VIE</span>
+                                <span class="text-gray-500 font-mono">OS 007</span>
+                            </div>
+                            <div class="text-sm text-gray-500">VIE T3
+                                <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                                BKK
+                            </div>
+                        </div>
+                        <div class="relative pl-6 pb-6 border-l-2 border-dashed border-gray-300">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-yellow-400 border-2 border-white"></div>
+                            <div class="text-sm font-bold text-euro-secondary">曼谷 (BKK) 轉機 2h 20m</div>
+                        </div>
+                        <div class="relative pl-6 border-l-2 border-gray-200">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-euro-secondary border-2 border-white"></div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-bold text-xl">17:50 BKK</span>
+                                <span class="text-gray-500 font-mono">CI 836</span>
+                            </div>
+                            <div class="text-sm text-gray-500">BKK
+                                <i class="fas fa-long-arrow-alt-right mx-2"></i>
+                                TPE T1
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 space-y-4">
+                        <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-euro-primary mb-2 text-sm">
+                                <i class="fas fa-shopping-bag mr-2"></i>維也納機場 (VIE) 離境</h4>
+                            <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                <li>
+                                    <strong>交通：</strong>從中央車站搭
+                                    <strong>RJ (Railjet)</strong>
+                                    直達機場最快 (15分鐘)。</li>
+                                <li>
+                                    <strong>購物：</strong>必買 Manner 威化餅、莫札特巧克力、施華洛世奇。</li>
+                                <li>
+                                    <strong>退稅：</strong>請預留 3 小時，海關蓋章隊伍通常很長。</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+                            <h4 class="font-bold text-euro-primary mb-2 text-sm">
+                                <i class="fas fa-spa mr-2"></i>曼谷轉機攻略</h4>
+                            <ul class="text-xs text-gray-600 space-y-1 list-disc list-inside">
+                                <li>
+                                    <strong>美食：</strong>轉機區有 Mango Sticky Rice (芒果糯米)。</li>
+                                <li>
+                                    <strong>放鬆：</strong>若時間充裕，可體驗泰式肩頸按摩。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-plan" class="tab-content active">
+                <div id="itinerary-list" class="space-y-6"></div>
+            </div>
+
+            <div id="tab-guide" class="tab-content">
+                <h2 class="text-2xl font-bold text-center mb-4 text-euro-primary title-text">城市導覽</h2>
+                <p class="text-center text-xs text-gray-400 mb-6">點擊城市卡片查看詳細攻略</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div onclick="openCityModal('munich')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/Munich.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">慕尼黑</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('salzburg')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/Salzburg.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">薩爾斯堡</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('hallstatt')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/Hallstatt.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">哈修塔特</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('ck')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/ck.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">CK小鎮</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('prague')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/prague.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">布拉格</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('budapest')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/budapest.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">布達佩斯</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="openCityModal('vienna')" class="bg-white rounded-xl overflow-hidden euro-shadow cursor-pointer active:scale-95 transition col-span-2 group">
+                        <div class="h-32 relative overflow-hidden">
+                            <img src="./img/vienna.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-2 pt-8">
+                                <div class="text-white font-bold text-lg">維也納</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-lists" class="tab-content">
+                <div class="bg-euro-card rounded-xl p-5 mb-6 euro-shadow border border-euro-light">
+                    <h3 class="font-bold text-xl mb-4 text-euro-primary border-b border-gray-100 pb-2">行前檢查表</h3>
+                    <div id="checklist-container" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <div id="tab-info" class="tab-content">
+                <h2 class="text-2xl font-bold text-center mb-6 text-euro-primary title-text">資訊中心</h2>
+
+                <div class="mb-8">
+                    <h3 class="font-bold text-gray-700 mb-3 px-1">
+                        <i class="fas fa-cloud-sun text-euro-secondary mr-2"></i>當地天氣</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <a href="https://www.accuweather.com/zh-tw/de/munich/80331/weather-forecast/178086" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
+                            <div class="text-xs text-gray-400">德國</div>
+                            <div class="font-bold text-euro-text">慕尼黑</div>
+                        </a>
+                        <a href="https://www.accuweather.com/zh-tw/at/salzburg/5020/weather-forecast/29272" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
+                            <div class="text-xs text-gray-400">奧地利</div>
+                            <div class="font-bold text-euro-text">薩爾斯堡</div>
+                        </a>
+                        <a href="https://www.accuweather.com/zh-tw/cz/prague/125594/weather-forecast/125594" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
+                            <div class="text-xs text-gray-400">捷克</div>
+                            <div class="font-bold text-euro-text">布拉格</div>
+                        </a>
+                        <a href="https://www.accuweather.com/zh-tw/hu/budapest/187423/weather-forecast/187423" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
+                            <div class="text-xs text-gray-400">匈牙利</div>
+                            <div class="font-bold text-euro-text">布達佩斯</div>
+                        </a>
+                        <a href="https://www.accuweather.com/zh-tw/at/vienna/1010/weather-forecast/31868" target="_blank" class="bg-white p-3 rounded-lg text-center shadow-sm border border-gray-100 hover:border-euro-secondary transition">
+                            <div class="text-xs text-gray-400">奧地利</div>
+                            <div class="font-bold text-euro-text">維也納</div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl p-5 mb-8 euro-shadow border-l-4 border-euro-primary">
+                    <h3 class="font-bold text-euro-primary mb-3 text-lg">
+                        <i class="fas fa-shield-alt mr-2"></i>富邦產險資訊</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-500">保單號碼</span>
+                            <span class="font-mono font-bold">0500-1234ABCD (範例)</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-100 pb-2">
+                            <span class="text-gray-500">海外緊急救援</span>
+                            <a href="tel:+886223459292" class="font-bold text-blue-600">+886-2-2345-9292</a>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
+                            <strong class="text-gray-800">理賠提醒：</strong><br>
+                            若遇班機延誤或行李遺失，請務必索取「航空公司證明」。若遇生病就醫，請保留「診斷證明」與「收據正本」。
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#FFF5F5] rounded-xl p-5 mb-6 border border-red-100">
+                    <h3 class="font-bold text-red-900 mb-4 text-lg">
+                        <i class="fas fa-passport mr-2"></i>台灣駐外辦事處</h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <div class="font-bold text-red-900 text-sm mb-1">
+                                <span class="mr-2">🇩🇪</span>駐慕尼黑辦事處 (德國)
+                            </div>
+                            <div class="pl-6 text-sm text-gray-600">
+                                <div class="mb-1">
+                                    <i class="fas fa-phone-alt w-5 text-gray-400"></i>
+                                    <a href="tel:+49895126790" class="underline">+49-89-5126-790</a>
+                                </div>
+                                <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+49-175-570-8059</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-red-900 text-sm mb-1">
+                                <span class="mr-2">🇦🇹</span>駐奧地利代表處 (維也納)
+                            </div>
+                            <div class="pl-6 text-sm text-gray-600">
+                                <div class="mb-1">
+                                    <i class="fas fa-phone-alt w-5 text-gray-400"></i>
+                                    <a href="tel:+4312124720" class="underline">+43-1-212-4720</a>
+                                </div>
+                                <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+43-664-345-0455</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-red-900 text-sm mb-1">
+                                <span class="mr-2">🇨🇿</span>駐捷克代表處 (布拉格)
+                            </div>
+                            <div class="pl-6 text-sm text-gray-600">
+                                <div class="mb-1">
+                                    <i class="fas fa-phone-alt w-5 text-gray-400"></i>
+                                    <a href="tel:+420233320606" class="underline">+420-233-320-606</a>
+                                </div>
+                                <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+420-603-166-707</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-red-900 text-sm mb-1">
+                                <span class="mr-2">🇭🇺</span>駐匈牙利代表處 (布達佩斯)
+                            </div>
+                            <div class="pl-6 text-sm text-gray-600">
+                                <div class="mb-1">
+                                    <i class="fas fa-phone-alt w-5 text-gray-400"></i>
+                                    <a href="tel:+3612662884" class="underline">+36-1-266-2884</a>
+                                </div>
+                                <div class="text-xs bg-white p-2 rounded border border-red-50">急難救助：+36-30-964-1601</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-red-200 text-center">
+                        <span class="text-sm font-bold text-red-900">歐盟通用急難電話：112</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div id="cityModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <div class="modal-content bg-white w-full max-w-md max-h-[85vh] rounded-2xl shadow-2xl relative flex flex-col overflow-hidden">
+
+                <button onclick="closeModal('cityModal')" class="absolute top-3 right-3 bg-white/80 w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 z-50 shadow-sm backdrop-blur-md transition-transform active:scale-90">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+
+                <div id="modalBody" class="overflow-y-auto flex-1 overscroll-contain"></div>
+            </div>
+        </div>
+
+        <div id="detailModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <div class="modal-content bg-white w-full max-w-md max-h-[90vh] rounded-2xl shadow-2xl relative flex flex-col overflow-hidden">
+
+                <div class="bg-euro-primary p-4 text-white flex justify-between items-center z-10 shrink-0">
+                    <h3 class="font-bold text-lg tracking-wide" id="detailTitle">詳細資訊</h3>
+                    <button onclick="closeModal('detailModal')" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+
+                <div class="p-5 overflow-y-auto flex-1 bg-white">
+                    <input type="hidden" id="detailId">
+
+                    <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100 shadow-sm">
+                        <h4 class="font-bold text-gray-700 mb-3 text-sm flex items-center">
+                            <i class="fas fa-ticket-alt mr-2 text-euro-secondary"></i>票券 / 雲端檔案
+                        </h4>
+
+                        <div id="staticLinksContainer" class="space-y-2 mb-4 empty:hidden"></div>
+
+                        <div id="linkDivider" class="h-px bg-gray-200 my-4 hidden"></div>
+
+                        <div class="text-xs text-gray-400 mb-2 font-bold">自訂連結列表 (標題 / 網址)</div>
+                        <div id="customLinksContainer" class="space-y-3"></div>
+
+                        <button onclick="addCustomLinkRow('', '')" class="mt-3 w-full py-2 border-2 border-dashed border-gray-300 text-gray-400 rounded-lg text-sm hover:border-euro-secondary hover:text-euro-secondary transition flex items-center justify-center">
+                            <i class="fas fa-plus mr-1"></i>
+                            新增一組連結
+                        </button>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-gray-700 mb-2 text-sm flex items-center">
+                            <i class="fas fa-pen mr-2 text-euro-secondary"></i>備註 / 注意事項
+                        </h4>
+                        <textarea id="detailNote" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-sm focus:outline-none focus:border-euro-secondary focus:ring-1 focus:ring-euro-secondary transition leading-relaxed text-gray-700" rows="5" placeholder="例如：訂位代號、集合地點..."></textarea>
+                    </div>
+                </div>
+
+                <div class="p-4 border-t border-gray-100 bg-gray-50 shrink-0">
+                    <button onclick="saveDetail()" class="w-full bg-euro-primary text-white py-3 rounded-xl font-bold shadow-md hover:bg-opacity-90 active:scale-95 transition tracking-widest">
+                        儲存修改
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-100 px-2 py-2 flex justify-between items-center z-40 text-gray-400 pb-5">
+            <button onclick="switchTab('plan')" class="nav-item active flex flex-col items-center gap-1 w-1/5" data-target="plan">
+                <i class="fas fa-calendar-alt text-xl mb-0.5"></i>
+                <span class="text-[10px]">行程</span>
+            </button>
+            <button onclick="switchTab('flight')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="flight">
+                <i class="fas fa-plane text-xl mb-0.5"></i>
+                <span class="text-[10px]">航班</span>
+            </button>
+            <button onclick="switchTab('guide')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="guide">
+                <i class="fas fa-book-open text-xl mb-0.5"></i>
+                <span class="text-[10px]">導覽</span>
+            </button>
+            <button onclick="switchTab('lists')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="lists">
+                <i class="fas fa-check-square text-xl mb-0.5"></i>
+                <span class="text-[10px]">清單</span>
+            </button>
+            <button onclick="switchTab('info')" class="nav-item flex flex-col items-center gap-1 w-1/5" data-target="info">
+                <i class="fas fa-info-circle text-xl mb-0.5"></i>
+                <span class="text-[10px]">資訊</span>
+            </button>
+        </nav>
+
+        <script>
+            // ================= ITINERARY DATA =================
+            const itineraryData = [
+                {
+                    date: "2/11", day: "週三", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", 
+                    startTime: "09:00", endTime: "20:30",
+                    timeline: [
+                        { id: "1100", time: "07:50", event: "桃園機場起飛", loc: "Taoyuan Airport", type: "flight", ticket: "", note: "CI169 櫃台通常在 T1" },
+                        { id: "1101", time: "18:35", event: "抵達慕尼黑機場", loc: "MUC Airport", type: "flight", ticket: "", note: "" },
+                        { id: "1102", time: "19:30", event: "飯店 Check-in", loc: "Metropol by Maier Privathotels", type: "hotel", ticket: "", note: "訂房代號: #123456" }
+                    ]
+                },
+                {
+                    date: "2/12", day: "週四", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", 
+                    startTime: "09:00", endTime: "20:40",
+                    timeline: [
+                        { id: "1201", time: "09:00", event: "瑪麗亞廣場", loc: "Marienplatz", type: "sight", ticket: "", note: "" },
+                        { id: "1202", time: "12:00", event: "皇家啤酒屋午餐", loc: "Hofbräuhaus München", type: "food", ticket: "", note: "" },
+                        { id: "1203", time: "14:00", event: "慕尼黑王宮", loc: "Munich Residenz", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/13", day: "週五", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00",
+                    timeline: [
+                        { id: "1301", time: "09:00", event: "搭火車往薩爾斯堡", loc: "Munich Central Station", type: "transport", ticket: "", note: "車票在 Apple Wallet" },
+                        { id: "1302", time: "13:00", event: "舊城區漫步", loc: "Getreidegasse", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/14", day: "週六", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00", timeline: [
+                        { id: "1401", time: "09:00", event: "米拉貝爾宮", loc: "Mirabell Palace", type: "sight", ticket: "", note: "" },
+                        {
+                            id: "1402", time: "11:45", event: "主教堂音樂會", loc: "Salzburg Cathedral", type: "music",
+                            ticket: [
+                                { name: "電子機票 (PDF)", url: "https://drive.google.com/..." },
+                                { name: "預辦登機網頁", url: "https://www.china-airlines.com/..." },
+                                { name: "保險單", url: "https://..." }
+                            ],
+                            note: "請提早15分鐘入場"
+                        },
+                        { id: "1403", time: "20:00", event: "要塞音樂會", loc: "Fortress Hohensalzburg", type: "music", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/15", day: "週日", city: "國王湖", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00", timeline: [
+                        { id: "1501", time: "08:30", event: "巴士往國王湖", loc: "Salzburg Hauptbahnhof", type: "transport", ticket: "", note: "使用 Salzburg Card" },
+                        { id: "1502", time: "10:00", event: "國王湖遊船", loc: "Königssee", type: "sight", ticket: "", note: "" },
+                        { id: "1503", time: "12:00", event: "紅蔥頭教堂午餐", loc: "St. Bartholomew's Church", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/16", day: "週一", city: "哈修塔特", hotel: "Heritage Hotel Hallstatt", startTime: "09:00", timeline: [
+                        { id: "1601", time: "09:00", event: "前往哈修塔特", loc: "Hallstatt", type: "transport", ticket: "", note: "" },
+                        { id: "1602", time: "11:00", event: "明信片觀景點", loc: "Classic Village Viewpoint Hallstatt", type: "sight", ticket: "", note: "" },
+                        { id: "1603", time: "14:00", event: "鹽礦纜車", loc: "Salzwelten Hallstatt", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/17", day: "週二", city: "庫倫洛夫", hotel: "Hotel Dvořák Český Krumlov", startTime: "09:00", timeline: [
+                        { id: "1701", time: "10:00", event: "包車前往 CK", loc: "Český Krumlov", type: "transport", ticket: "", note: "司機 Mr. Novak" },
+                        { id: "1702", time: "13:00", event: "彩繪塔", loc: "Český Krumlov Castle", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/18", day: "週三", city: "布拉格", hotel: "Art Deco Imperial Hotel", startTime: "09:00", timeline: [
+                        { id: "1801", time: "13:00", event: "前往布拉格", loc: "Prague", type: "transport", ticket: "", note: "" },
+                        { id: "1802", time: "17:00", event: "帝國咖啡館", loc: "Café Imperial", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/19", day: "週四", city: "布拉格", hotel: "Grandium Hotel Prague", startTime: "09:00", timeline: [
+                        { id: "1901", time: "09:00", event: "查理大橋", loc: "Charles Bridge", type: "sight", ticket: "", note: "" },
+                        { id: "1902", time: "10:30", event: "天文鐘", loc: "Old Town Square", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/20", day: "週五", city: "布拉格", hotel: "Grandium Hotel Prague", startTime: "09:00", timeline: [
+                        { id: "2001", time: "09:00", event: "布拉格城堡", loc: "Prague Castle", type: "sight", ticket: "", note: "" },
+                        { id: "2002", time: "10:30", event: "聖維特大教堂", loc: "St. Vitus Cathedral", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/21", day: "週六", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", startTime: "09:00", timeline: [
+                        { id: "2101", time: "09:00", event: "火車往布達佩斯", loc: "Prague Main Station", type: "transport", ticket: "", note: "" },
+                        { id: "2102", time: "16:00", event: "紐約咖啡館", loc: "New York Café", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/22", day: "週日", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", startTime: "09:00", timeline: [
+                        { id: "2201", time: "09:00", event: "聖伊什特萬聖殿", loc: "St. Stephen's Basilica", type: "sight", ticket: "", note: "" },
+                        { id: "2202", time: "18:00", event: "多瑙河遊船", loc: "Danube River Budapest", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/23", day: "週一", city: "布達佩斯", hotel: "Novotel Budapest Danube", startTime: "09:00", timeline: [
+                        { id: "2301", time: "09:00", event: "漁人堡", loc: "Fisherman's Bastion", type: "sight", ticket: "", note: "" },
+                        { id: "2302", time: "19:00", event: "國會大廈夜景", loc: "Hungarian Parliament Building", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/24", day: "週二", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", startTime: "09:00", timeline: [
+                        { id: "2401", time: "09:00", event: "火車往維也納", loc: "Budapest Keleti", type: "transport", ticket: "", note: "" },
+                        { id: "2402", time: "13:00", event: "熊布朗宮", loc: "Schönbrunn Palace", type: "sight", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/25", day: "週三", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", startTime: "09:00", timeline: [
+                        { id: "2501", time: "09:00", event: "霍夫堡皇宮", loc: "Hofburg", type: "sight", ticket: "", note: "" },
+                        { id: "2502", time: "16:00", event: "中央咖啡館", loc: "Café Central", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/26", day: "週四", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", startTime: "09:00", timeline: [
+                        { id: "2601", time: "09:00", event: "百水公寓", loc: "Hundertwasserhaus", type: "sight", ticket: "", note: "" },
+                        { id: "2602", time: "18:00", event: "維也納肋排", loc: "Ribs of Vienna", type: "food", ticket: "", note: "" }
+                    ]
+                },
+                {
+                    date: "2/27", day: "週五", city: "返程", hotel: "飛機上", startTime: "09:00", timeline: [
+                        { id: "2701", time: "20:00", event: "前往機場", loc: "Vienna International Airport", type: "transport", ticket: "", note: "" },
+                        { id: "2702", time: "23:25", event: "搭機返台", loc: "VIE Airport", type: "flight", ticket: "", note: "" }
+                    ]
+                }
+            ];
+    
+            // ================= CITY GUIDE DATA =================
+            const cityGuides = {
+                munich: {
+                    title: "慕尼黑 Munich",
+                    img: "./img/Munich.jpg",
+                    intro: "德國巴伐利亞邦首府，也是啤酒節的故鄉。這裡有古老的建築、豪邁的豬腳與啤酒。",
+                    spots: ["瑪麗亞廣場", "皇家啤酒屋", "慕尼黑王宮"],
+                    food: ["德國豬腳 (Haxn)", "白香腸 (Weisswurst)", "一公升啤酒"],
+                    shop: ["Rimowa 行李箱", "百靈油 (China Oel)", "DM藥妝"],
+                    tips: "地鐵票進站前務必在打票機打卡，否則視為逃票。"
+                },
+                salzburg: {
+                    title: "薩爾斯堡 Salzburg",
+                    img: "./img/Salzburg.jpg",
+                    intro: "莫札特的故鄉，也是電影《真善美》的拍攝地。整個舊城區優雅而充滿藝術氣息。",
+                    spots: ["米拉貝爾宮", "薩爾斯堡要塞", "格特萊德巷"],
+                    food: ["薩爾斯堡舒芙蕾 (Nockerl)", "Bosna 咖哩香腸堡"],
+                    shop: ["莫札特巧克力 (銀藍色包裝最正統)", "岩鹽"],
+                    tips: "購買 Salzburg Card 非常划算，包含交通與景點門票。"
+                },
+                hallstatt: {
+                    title: "哈修塔特 Hallstatt",
+                    img: "./img/Hallstatt.jpg",
+                    intro: "被譽為「世界最美小鎮」，依山傍水，宛如童話仙境。",
+                    spots: ["明信片觀景點", "古老鹽礦", "人骨教堂"],
+                    food: ["烤鱒魚 (來自哈修塔特湖)", "奶油捲"],
+                    shop: ["手工鹽罐", "木製工藝品"],
+                    tips: "遊客非常多，建議清晨或傍晚散步最舒服。"
+                },
+                ck: {
+                    title: "庫倫洛夫 CK",
+                    img: "./img/ck.jpg",
+                    intro: "波西米亞童話小鎮。伏爾塔瓦河呈S型蜿蜒流過，橘紅色的屋頂是這裡的標誌。",
+                    spots: ["彩繪塔", "城堡橋廊", "地窖餐廳"],
+                    food: ["地窖烤肉", "肉桂煙囪捲 (Trdelník)"],
+                    shop: ["菠丹妮 (Botanicus) 手工皂", "刺蝟筆"],
+                    tips: "全城都是石板路，非常難拖行李，請輕裝簡行。"
+                },
+                prague: {
+                    title: "布拉格 Prague",
+                    img: "./img/prague.jpg",
+                    intro: "捷克首都，千塔之城。擁有古老的橋樑、教堂和金色塔樓。",
+                    spots: ["查理大橋", "天文鐘", "布拉格城堡"],
+                    food: ["烤鴨佐紫甘藍", "皮爾森啤酒"],
+                    shop: ["曼菲蘿 (Manufaktura) 啤酒花保養品", "水晶玻璃"],
+                    tips: "人多的地方(如查理大橋)請務必將背包背在前面，小心扒手。"
+                },
+                budapest: {
+                    title: "布達佩斯 Budapest",
+                    img: "./img/budapest.jpg",
+                    intro: "多瑙河明珠，由布達與佩斯組成。夜景金碧輝煌，被譽為歐洲最美。",
+                    spots: ["漁人堡", "國會大廈", "塞切尼溫泉"],
+                    food: ["匈牙利牛肉湯 (Goulash)", "鵝肝料理"],
+                    shop: ["紅椒粉 (Paprika)", "貴腐酒 (Tokaji)"],
+                    tips: "地鐵手扶梯速度非常快，搭乘時請握緊扶手。"
+                },
+                vienna: {
+                    title: "維也納 Vienna",
+                    img: "./img/vienna.jpg",
+                    intro: "奧地利首都，昔日哈布斯堡王朝中心。充滿皇家氣派與咖啡文化。",
+                    spots: ["霍夫堡", "熊布朗宮", "中央咖啡館"],
+                    food: ["維也納炸牛排 (Schnitzel)", "薩赫蛋糕 (Sacher Torte)"],
+                    shop: ["Manner 威化餅", "小紅帽咖啡豆"],
+                    tips: "週日商店幾乎全關，採買請避開週日。"
+                }
+            };
+    
+            const defaultChecklist = [
+                { id: 1, text: "護照 (效期>6個月)", done: false },
+                { id: 2, text: "歐元現金/信用卡", done: false },
+                { id: 3, text: "網卡/E-SIM", done: false },
+                { id: 4, text: "轉接頭(雙圓孔)", done: false },
+                { id: 5, text: "常備藥品", done: false }
+            ];
+    
+            // ================= INIT & UTILS =================
+            document.addEventListener('DOMContentLoaded', function () {
+                // 1. 初始化功能
+                renderItinerary();
+                loadChecklist();
+                
+                // 2. 初始定位到今日行程
+                scrollToToday();
+
+                // 3. 時間即時更新邏輯 (每秒更新)
+                function updateClock() {
+                    const now = new Date();
+                    
+                    // 設定時間格式：月/日 時:分:秒
+                    const options = { 
+                        month: 'numeric', 
+                        day: 'numeric', 
+                        hour: '2-digit', 
+                        minute: '2-digit', 
+                        second: '2-digit',
+                        hour12: false 
+                    };
+
+                    // A. 取得當地時間 (手機目前時區)
+                    const localTimeStr = now.toLocaleString('zh-TW', options);
+
+                    // B. 取得台灣時間 (強制鎖定 Asia/Taipei)
+                    const twTimeStr = now.toLocaleString('zh-TW', { ...options, timeZone: 'Asia/Taipei' });
+
+                    // C. 寫入 HTML
+                    const dateElement = document.getElementById('headerDate');
+                    
+                    // 設定容器排版：靠右對齊 (items-end)、垂直排列 (flex-col)
+                    dateElement.className = "flex flex-col items-end justify-center";
+                    
+                    // 設定內容：兩行字體大小皆為 text-xs (約12px)，並加上等寬字體 font-mono 防止數字跳動
+                    dateElement.innerHTML = `
+                        <div class="text-xs font-bold text-gray-600 font-mono text-right">當地 ${localTimeStr}</div>
+                        <div class="text-xs text-gray-400 font-mono text-right">台灣 ${twTimeStr}</div>
+                    `;
+                }
+
+                // 立即執行一次，避免剛載入時有空窗期
+                updateClock();
+
+                // 設定計時器，每 1000 毫秒 (1秒) 更新一次
+                setInterval(updateClock, 1000);
+            });
+            
+            function switchTab(tabId) {
+                document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                document.getElementById('tab-' + tabId).classList.add('active');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                document.querySelector(`.nav-item[data-target="${tabId}"]`).classList.add('active');
+                // 如果是切換到行程表，則自動捲動
+                if (tabId === 'plan') {
+                    scrollToToday();
+                } else {
+                    window.scrollTo(0, 0);
+                }
+            }
+    
+            function getMapLinkHtml(name) {
+                const query = encodeURIComponent(name);
+                const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+                return `<a href="${url}" target="_blank" class="map-link inline-flex items-center justify-center text-euro-link ml-1.5 hover:text-euro-primary transition-transform"><i class="fas fa-map-marker-alt text-base"></i></a>`;
+            }
+    
+            // ================= PLAN RENDERING =================
+            function renderItinerary() {
+                const container = document.getElementById('itinerary-list');
+                let html = '';
+                
+                itineraryData.forEach((item, index) => {
+                    let timelineNodes = [];
+                    
+                    // 取得該日設定的 起訖時間 (若無設定，給予預設值)
+                    const departureTime = item.startTime || "09:00";
+                    const returnTime = item.endTime || "20:00";
+
+                    // 1. 邏輯：自動加入「從飯店出發」 
+                    // 條件：不是第一天 (index > 0) 且 第一個行程不是「起飛」
+                    if (index > 0 && !item.timeline[0].event.includes("起飛")) {
+                        const prevHotel = itineraryData[index - 1].hotel;
+                        timelineNodes.push({
+                            id: "start_" + item.date.replace('/',''),
+                            time: departureTime, // 讀取 startTime
+                            event: `從 ${prevHotel} 出發`,
+                            loc: prevHotel, 
+                            type: "hotel_start",
+                            ticket: "", note: ""
+                        });
+                    }
+                    
+                    // 2. 加入主要行程事件
+                    timelineNodes = timelineNodes.concat(item.timeline);
+                    
+                    // 3. 邏輯：自動加入「回到飯店」 
+                    // 條件：最後一個行程不是「搭機」
+                    if (!item.timeline[item.timeline.length-1].event.includes("搭機")) {
+                        timelineNodes.push({
+                            id: "end_" + item.date.replace('/',''),
+                            time: returnTime, // 讀取 endTime
+                            event: `回到 ${item.hotel}`, 
+                            loc: item.hotel, 
+                            type: "hotel_end",
+                            ticket: "", note: ""
+                        });
+                    }
+
+                    // 4. 渲染時間軸項目
+                    let timelineHtml = '';
+                    timelineNodes.forEach((event, idx) => {
+                        const isLast = idx === timelineNodes.length - 1;
+                        
+                        // 設定圖示
+                        let icon = 'fa-circle';
+                        if (event.type === 'flight') icon = 'fa-plane';
+                        if (event.type === 'food') icon = 'fa-utensils';
+                        if (event.type === 'hotel' || event.type === 'hotel_end') icon = 'fa-bed';
+                        if (event.type === 'hotel_start') icon = 'fa-walking';
+                        if (event.type === 'transport') icon = 'fa-train';
+                        if (event.type === 'music') icon = 'fa-music';
+                        if (event.type === 'sight') icon = 'fa-camera';
+
+                        // === 檢查連結圖示 ===
+                        const hasStaticLink = !!event.ticket;
+                        
+                        const customLinksRaw = localStorage.getItem('ticket_custom_links_' + event.id);
+                        let hasCustomLink = false;
+                        if (customLinksRaw && customLinksRaw !== '[]') {
+                            hasCustomLink = true;
+                        }
+                        
+                        const showLinkIcon = hasStaticLink || hasCustomLink;
+                        const linkIconHtml = showLinkIcon ? '<i class="fas fa-link text-euro-secondary ml-1.5 text-xs"></i>' : '';
+
+                        // === 檢查備註圖示 ===
+                        const localNote = localStorage.getItem('ticket_note_' + event.id);
+                        const showNoteIcon = (localNote && localNote.trim() !== '') || (event.note && event.note.trim() !== '');
+                        const noteIconHtml = showNoteIcon ? '<i class="fas fa-sticky-note text-gray-400 ml-1.5 text-xs"></i>' : '';
+                        
+                        // 地圖連結
+                        const mapIconHtml = getMapLinkHtml(event.loc);
+                        
+                        // 判斷是否顯示「明細」按鈕
+                        const showBtn = (event.type !== 'hotel_start' && event.type !== 'hotel_end');
+
+                        timelineHtml += `
+                        <div class="flex gap-3 relative">
+                            ${!isLast ? '<div class="absolute left-3.5 top-8 bottom-[-12px] w-0.5 bg-gray-200 z-0"></div>' : ''}
+                            
+                            <div class="relative z-10 w-7 h-7 flex-shrink-0 bg-euro-bg border border-euro-secondary rounded-full flex items-center justify-center text-euro-secondary text-xs">
+                                <i class="fas ${icon}"></i>
+                            </div>
+                            
+                            <div class="flex-1 pb-6">
+                                <span class="text-xs font-bold text-gray-400 font-mono bg-gray-100 px-1 rounded inline-block mb-1">
+                                    ${event.time}
+                                </span>
+
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-base font-bold text-gray-800 leading-tight">
+                                        ${event.event} ${mapIconHtml} ${linkIconHtml} ${noteIconHtml}
+                                    </h4>
+                                    
+                                    ${ showBtn ? 
+                                    `<button onclick="openDetailModal('${event.id}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
+                                        明細
+                                    </button>` 
+                                    : ''}
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+
+                    const hotelMapLinkHtml = getMapLinkHtml(item.hotel);
+                    const cardId = `card-${item.date.replace('/', '-')}`;
+
+                    html += `
+                    <div id="${cardId}" class="bg-white rounded-xl euro-shadow overflow-hidden">
+                        <div class="bg-euro-primary/5 p-4 border-b border-euro-light flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-euro-secondary text-white rounded-lg px-3 py-1 text-center min-w-[55px]">
+                                    <div class="text-xs font-light uppercase">Feb</div>
+                                    <div class="text-lg font-bold font-serif leading-none">${item.date.split('/')[1]}</div>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg text-euro-text">${item.city}</h3>
+                                    <div class="text-xs text-gray-500">${item.day}</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-gray-600 font-bold flex items-center bg-white px-3 py-1.5 rounded-full border border-gray-100 shadow-sm">
+                            <i class="fas fa-bed mr-1.5 text-euro-secondary"></i> ${item.hotel.split(' ')[0]} ${hotelMapLinkHtml}
+                            </div>
+                        </div>
+                        <div class="p-5 pt-6">
+                            ${timelineHtml}
                         </div>
                     </div>`;
                 });
+                container.innerHTML = html;
+            }
 
-                const hotelMapLinkHtml = getMapLinkHtml(item.hotel);
-                const cardId = `card-${item.date.replace('/', '-')}`;
-                html += `
-                <div id="${cardId}" class="bg-white rounded-xl euro-shadow overflow-hidden">
-                    <div class="bg-euro-primary/5 p-4 border-b border-euro-light flex justify-between items-center">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-euro-secondary text-white rounded-lg px-3 py-1 text-center min-w-[55px]">
-                                <div class="text-xs font-light uppercase">Feb</div>
-                                <div class="text-lg font-bold font-serif leading-none">${item.date.split('/')[1]}</div>
-                            </div>
-                            <div><h3 class="font-bold text-lg text-euro-text">${item.city}</h3><div class="text-xs text-gray-500">${item.day}</div></div>
-                        </div>
-                        <div class="text-xs text-gray-600 font-bold flex items-center bg-white px-3 py-1.5 rounded-full border border-gray-100 shadow-sm"><i class="fas fa-bed mr-1.5 text-euro-secondary"></i> ${item.hotel.split(' ')[0]} ${hotelMapLinkHtml}</div>
+            // ================= MODALS =================
+            let currentDetailId = null;
+    
+            function openDetailModal(id, title) {
+                currentDetailId = id;
+                document.getElementById('detailTitle').innerText = title;
+                document.getElementById('detailId').value = id;
+    
+                // 1. 讀取與設定備註
+                let staticData = { ticket: "", note: "" };
+                itineraryData.forEach(day => {
+                    const found = day.timeline.find(t => t.id === id);
+                    if (found) staticData = found;
+                });
+    
+                const savedNote = localStorage.getItem('ticket_note_' + id);
+                document.getElementById('detailNote').value = savedNote !== null ? savedNote : staticData.note;
+    
+                // 2. 處理「靜態預設票券」 (顯示為可點擊按鈕)
+                const staticContainer = document.getElementById('staticLinksContainer');
+                staticContainer.innerHTML = '';
+                let hasStatic = false;
+    
+                if (staticData.ticket) {
+                    const tickets = Array.isArray(staticData.ticket) ? staticData.ticket : [{ name: "預設票券", url: staticData.ticket }];
+                    tickets.forEach(t => {
+                        const btn = document.createElement('a');
+                        btn.href = t.url;
+                        btn.target = "_blank";
+                        btn.className = "flex items-center justify-center w-full bg-euro-light/50 text-euro-text border border-euro-light py-2 rounded-lg hover:bg-euro-secondary hover:text-white transition shadow-sm text-sm font-bold mb-2";
+                        btn.innerHTML = `<i class="fas fa-ticket-alt mr-2"></i> ${t.name || "預設票券"}`;
+                        staticContainer.appendChild(btn);
+                    });
+                    hasStatic = true;
+                }
+    
+                // 3. 處理「自訂連結」 (顯示為輸入框)
+                const customContainer = document.getElementById('customLinksContainer');
+                customContainer.innerHTML = '';
+    
+                // 從 LocalStorage 讀取 JSON 字串
+                const rawLinks = localStorage.getItem('ticket_custom_links_' + id);
+                let customLinks = [];
+                try {
+                    customLinks = rawLinks ? JSON.parse(rawLinks) : [];
+                    // 相容性處理：如果舊資料是純字串 URL，轉成物件
+                    if (!Array.isArray(customLinks) && rawLinks.startsWith('http')) {
+                        customLinks = [{ title: "自訂連結", url: rawLinks }];
+                    }
+                } catch (e) { console.error("Data parse error", e); }
+    
+                // 產生輸入欄位
+                customLinks.forEach(link => {
+                    addCustomLinkRow(link.title, link.url);
+                });
+    
+                // 4. 控制分隔線顯示
+                const divider = document.getElementById('linkDivider');
+                if (hasStatic) {
+                    divider.classList.remove('hidden');
+                    // 如果沒有自訂連結，預設開一個空的給使用者填
+                    if (customLinks.length === 0) addCustomLinkRow('', '');
+                } else {
+                    divider.classList.add('hidden');
+                    if (customLinks.length === 0) addCustomLinkRow('', '');
+                }
+    
+                document.getElementById('detailModal').classList.add('open');
+            }
+    
+            // 輔助函式：新增一行自訂連結輸入框
+            function addCustomLinkRow(title = '', url = '') {
+                const container = document.getElementById('customLinksContainer');
+                const div = document.createElement('div');
+                div.className = "custom-link-row flex gap-2 items-start animate-fade-in";
+                div.innerHTML = `
+                    <div class="flex-1 space-y-1">
+                        <input type="text" class="link-title w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-euro-secondary placeholder-gray-400" placeholder="名稱 (例: 餐廳訂位)" value="${title}">
+                        <input type="text" class="link-url w-full bg-white border border-gray-300 rounded px-2 py-1.5 text-xs focus:outline-none focus:border-euro-secondary text-blue-600 placeholder-gray-400" placeholder="網址 (https://...)" value="${url}">
                     </div>
-                    <div class="p-5 pt-6">${timelineHtml}</div>
-                </div>`;
-            });
-            container.innerHTML = html;
-        }
-
-        // ================= MODALS =================
-        let currentDetailId = null;
-
-        function openDetailModal(id, title) {
-            currentDetailId = id;
-            document.getElementById('detailTitle').innerText = title;
-            document.getElementById('detailId').value = id;
-            
-            let staticData = { ticket: "", note: "" };
-            itineraryData.forEach(day => {
-                const found = day.timeline.find(t => t.id === id);
-                if(found) staticData = found;
-            });
-
-            const savedNote = localStorage.getItem('ticket_note_' + id);
-            document.getElementById('detailNote').value = savedNote !== null ? savedNote : staticData.note;
-
-            const savedLink = localStorage.getItem('ticket_link_' + id);
-            const finalLink = savedLink !== null ? savedLink : staticData.ticket;
-
-            if (finalLink) {
-                document.getElementById('linkDisplayArea').classList.remove('hidden');
-                document.getElementById('linkInputArea').classList.add('hidden');
-                document.getElementById('fileLinkBtn').href = finalLink;
-                document.getElementById('ticketLinkInput').value = finalLink;
-            } else {
+                    <button onclick="this.parentElement.remove()" class="mt-1 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            }
+    
+            // 儲存函式
+            function saveDetail() {
+                // 1. 儲存備註
+                localStorage.setItem('ticket_note_' + currentDetailId, document.getElementById('detailNote').value);
+    
+                // 2. 儲存自訂連結 (收集所有輸入框)
+                const rows = document.querySelectorAll('.custom-link-row');
+                const links = [];
+    
+                rows.forEach(row => {
+                    const title = row.querySelector('.link-title').value.trim();
+                    const url = row.querySelector('.link-url').value.trim();
+    
+                    // 只有當標題或網址有填寫時才儲存
+                    if (title || url) {
+                        links.push({
+                            title: title || "未命名連結", // 預設標題
+                            url: url
+                        });
+                    }
+                });
+    
+                localStorage.setItem('ticket_custom_links_' + currentDetailId, JSON.stringify(links));
+    
+                closeModal('detailModal');
+                renderItinerary(); // 更新列表上的圖示
+                alert('儲存成功');
+            }
+    
+            function clearLink() {
+                localStorage.setItem('ticket_link_' + currentDetailId, "");
                 document.getElementById('linkDisplayArea').classList.add('hidden');
                 document.getElementById('linkInputArea').classList.remove('hidden');
                 document.getElementById('ticketLinkInput').value = '';
             }
-            document.getElementById('detailModal').classList.add('open');
-        }
-
-        function clearLink() {
-            localStorage.setItem('ticket_link_' + currentDetailId, "");
-            document.getElementById('linkDisplayArea').classList.add('hidden');
-            document.getElementById('linkInputArea').classList.remove('hidden');
-            document.getElementById('ticketLinkInput').value = '';
-        }
-
-        function saveDetail() {
-            localStorage.setItem('ticket_note_' + currentDetailId, document.getElementById('detailNote').value);
-            localStorage.setItem('ticket_link_' + currentDetailId, document.getElementById('ticketLinkInput').value);
-            closeModal('detailModal');
-            renderItinerary();
-            alert('儲存成功');
-        }
-
-        function openCityModal(cityKey) {
-            const data = cityGuides[cityKey];
-            const modalBody = document.getElementById('modalBody');
-            if(!data) return;
-            
-            // Helper to generate list items
-            const renderList = (arr, icon) => arr ? arr.map(s => `<li class="mb-1"><i class="fas ${icon} text-euro-secondary text-xs mr-2"></i>${s}</li>`).join('') : '';
-
-            modalBody.innerHTML = `
-                <div class="h-48 relative">
-                    <img src="${data.img}" class="w-full h-full object-cover rounded-t-2xl">
-                    <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 pt-12">
-                        <h2 class="text-2xl font-bold text-white serif-font">${data.title}</h2>
-                    </div>
-                </div>
-
-                <div class="p-6">
-                    <p class="text-gray-600 leading-relaxed mb-6 text-justify text-sm">${data.intro}</p>
-                    
-                    <div class="space-y-4">
-                        <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-euro-primary">
-                            <h4 class="font-bold text-gray-800 text-sm mb-2">必訪景點</h4>
-                            <ul class="text-sm text-gray-600">${renderList(data.spots, 'fa-check')}</ul>
-                        </div>
-                        <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-300">
-                            <h4 class="font-bold text-gray-800 text-sm mb-2">美食推薦</h4>
-                            <ul class="text-sm text-gray-600">${renderList(data.food, 'fa-utensils')}</ul>
-                        </div>
-                        <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-300">
-                            <h4 class="font-bold text-gray-800 text-sm mb-2">必買購物</h4>
-                            <ul class="text-sm text-gray-600">${renderList(data.shop, 'fa-shopping-bag')}</ul>
+    
+    
+            function openCityModal(cityKey) {
+                const data = cityGuides[cityKey];
+                const modalBody = document.getElementById('modalBody');
+                if (!data) return;
+    
+                // Helper to generate list items
+                const renderList = (arr, icon) => arr ? arr.map(s => `<li class="mb-1"><i class="fas ${icon} text-euro-secondary text-xs mr-2"></i>${s}</li>`).join('') : '';
+    
+                modalBody.innerHTML = `
+                    <div class="h-48 relative">
+                        <img src="${data.img}" class="w-full h-full object-cover rounded-t-2xl">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 pt-12">
+                            <h2 class="text-2xl font-bold text-white serif-font">${data.title}</h2>
                         </div>
                     </div>
-
-                    <div class="mt-4 text-xs text-gray-500 bg-euro-light/30 p-3 rounded flex items-start">
-                        <i class="fas fa-exclamation-circle mr-2 mt-0.5 text-euro-secondary"></i>
-                        <span>${data.tips}</span>
-                    </div>
-
-                    <div class="mt-6 pt-4 border-t border-gray-100">
-                        <button onclick="closeModal('cityModal')" class="w-full bg-gray-100 text-gray-500 text-sm font-medium py-3 rounded-lg hover:bg-gray-200 transition active:scale-95 tracking-wide">
-                            關閉導覽
-                        </button>
-                    </div>
-                </div>`;
-                
-            document.getElementById('cityModal').classList.add('open');
-        }
-
-        function closeModal(modalId) { document.getElementById(modalId).classList.remove('open'); }
-
-        // ================= CHECKLIST =================
-        function loadChecklist() {
-            let data = JSON.parse(localStorage.getItem('trip_checklist')) || defaultChecklist;
-            const container = document.getElementById('checklist-container');
-            container.innerHTML = '';
-            data.forEach((item, index) => {
-                const checked = item.done ? 'checked' : '';
-                const style = item.done ? 'line-through text-gray-300' : 'text-gray-700';
-                const div = document.createElement('div');
-                div.className = "flex items-center gap-3 py-2 border-b border-gray-50 last:border-0";
-                div.innerHTML = `<input type="checkbox" ${checked} class="w-5 h-5 rounded text-euro-secondary focus:ring-euro-secondary" onchange="toggleCheck(${index})"><span class="${style} flex-1">${item.text}</span>`;
-                container.appendChild(div);
-            });
-        }
-        function toggleCheck(index) {
-            let data = JSON.parse(localStorage.getItem('trip_checklist')) || defaultChecklist;
-            data[index].done = !data[index].done;
-            localStorage.setItem('trip_checklist', JSON.stringify(data));
-            loadChecklist();
-        }
-        function scrollToToday() {
-            // 1. 取得今天的日期字串 (格式要跟 ID 一樣，例如 2-7)
-            const now = new Date();
-            const month = now.getMonth() + 1;
-            const date = now.getDate();
-            
-            // 為了測試，您可以暫時把下方這行解除註解，強制設定成行程中有的日期
-            // const month = 2; const date = 14; 
-
-            const todayId = `card-${month}-${date}`;
-            const todayElement = document.getElementById(todayId);
-
-            if (todayElement) {
-                // 2. 使用 setTimeout 確保畫面已經渲染完成 (非常重要)
-                setTimeout(() => {
-                    // 3. 手動計算位置
-                    // 取得元件距離頁面頂端的距離
-                    const elementPosition = todayElement.getBoundingClientRect().top + window.scrollY;
-                    
-                    // 扣除 Header 的高度 (約 80px) 再多留一點空間 (20px) = 100px
-                    const offsetPosition = elementPosition - 100;
-
-                    // 4. 執行捲動
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                }, 100); // 延遲 100 毫秒，給瀏覽器一點時間喘息
-            } else {
-                console.log("找不到今天的行程卡片: " + todayId);
+    
+                    <div class="p-6">
+                        <p class="text-gray-600 leading-relaxed mb-6 text-justify text-sm">${data.intro}</p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-euro-primary">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">必訪景點</h4>
+                                <ul class="text-sm text-gray-600">${renderList(data.spots, 'fa-check')}</ul>
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-orange-300">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">美食推薦</h4>
+                                <ul class="text-sm text-gray-600">${renderList(data.food, 'fa-utensils')}</ul>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-300">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">必買購物</h4>
+                                <ul class="text-sm text-gray-600">${renderList(data.shop, 'fa-shopping-bag')}</ul>
+                            </div>
+                        </div>
+    
+                        <div class="mt-4 text-xs text-gray-500 bg-euro-light/30 p-3 rounded flex items-start">
+                            <i class="fas fa-exclamation-circle mr-2 mt-0.5 text-euro-secondary"></i>
+                            <span>${data.tips}</span>
+                        </div>
+    
+                        <div class="mt-6 pt-4 border-t border-gray-100">
+                            <button onclick="closeModal('cityModal')" class="w-full bg-gray-100 text-gray-500 text-sm font-medium py-3 rounded-lg hover:bg-gray-200 transition active:scale-95 tracking-wide">
+                                關閉導覽
+                            </button>
+                        </div>
+                    </div>`;
+    
+                document.getElementById('cityModal').classList.add('open');
             }
-        }
-    </script>
-</body>
+    
+            function closeModal(modalId) { document.getElementById(modalId).classList.remove('open'); }
+    
+            // ================= CHECKLIST =================
+            function loadChecklist() {
+                let data = JSON.parse(localStorage.getItem('trip_checklist')) || defaultChecklist;
+                const container = document.getElementById('checklist-container');
+                container.innerHTML = '';
+                data.forEach((item, index) => {
+                    const checked = item.done ? 'checked' : '';
+                    const style = item.done ? 'line-through text-gray-300' : 'text-gray-700';
+                    const div = document.createElement('div');
+                    div.className = "flex items-center gap-3 py-2 border-b border-gray-50 last:border-0";
+                    div.innerHTML = `<input type="checkbox" ${checked} class="w-5 h-5 rounded text-euro-secondary focus:ring-euro-secondary" onchange="toggleCheck(${index})"><span class="${style} flex-1">${item.text}</span>`;
+                    container.appendChild(div);
+                });
+            }
+            function toggleCheck(index) {
+                let data = JSON.parse(localStorage.getItem('trip_checklist')) || defaultChecklist;
+                data[index].done = !data[index].done;
+                localStorage.setItem('trip_checklist', JSON.stringify(data));
+                loadChecklist();
+            }
+            function scrollToToday() {
+                // 1. 取得今天的日期字串 (格式要跟 ID 一樣，例如 2-7)
+                const now = new Date();
+                const month = now.getMonth() + 1;
+                const date = now.getDate();
+    
+                // 為了測試，您可以暫時把下方這行解除註解，強制設定成行程中有的日期
+                // const month = 2; const date = 14; 
+    
+                const todayId = `card-${month}-${date}`;
+                const todayElement = document.getElementById(todayId);
+    
+                if (todayElement) {
+                    // 2. 使用 setTimeout 確保畫面已經渲染完成 (非常重要)
+                    setTimeout(() => {
+                        // 3. 手動計算位置
+                        // 取得元件距離頁面頂端的距離
+                        const elementPosition = todayElement.getBoundingClientRect().top + window.scrollY;
+    
+                        // 扣除 Header 的高度 (約 80px) 再多留一點空間 (20px) = 100px
+                        const offsetPosition = elementPosition - 100;
+    
+                        // 4. 執行捲動
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: "smooth"
+                        });
+                    }, 100); // 延遲 100 毫秒，給瀏覽器一點時間喘息
+                } else {
+                    console.log("找不到今天的行程卡片: " + todayId);
+                }
+            }
+        </script>
+    </body>
+    
 </html>
+
