@@ -1500,11 +1500,11 @@
             function scrollToToday() {
                 // 1. 取得今天的日期字串 (格式要跟 ID 一樣，例如 2-7)
                 const now = new Date();
-                const month = now.getMonth() + 1;
-                const date = now.getDate();
+                // const month = now.getMonth() + 1;
+                // const date = now.getDate();
     
                 // 為了測試，您可以暫時把下方這行解除註解，強制設定成行程中有的日期
-                // const month = 2; const date = 14; 
+                const month = 2; const date = 14; 
     
                 const todayId = `card-${month}-${date}`;
                 const todayElement = document.getElementById(todayId);
