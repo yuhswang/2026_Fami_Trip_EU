@@ -635,7 +635,7 @@
 
                     <div class="mb-6 bg-gray-50 p-4 rounded-xl border border-gray-100 shadow-sm">
                         <h4 class="font-bold text-gray-700 mb-3 text-sm flex items-center">
-                            <i class="fas fa-ticket-alt mr-2 text-euro-secondary"></i>票券 / 雲端檔案
+                            <i class="fas fa-ticket-alt mr-2 text-euro-secondary"></i>票券 / 連結
                         </h4>
 
                         <div id="staticLinksContainer" class="space-y-2 mb-4 empty:hidden"></div>
@@ -1189,7 +1189,10 @@
                             event: "舊城門戶巡禮 (火藥塔、市民會館、亨利塔)",
                             loc: "Prašná brána",
                             type: "sight",
-                            ticket: [{name: "早晨散步路線導航", url: "https://maps.app.goo.gl/ExtshQQ4oT1GaSpw9"}],
+                            ticket: [
+                                {name: "早晨散步路線導航", url: "https://maps.app.goo.gl/ExtshQQ4oT1GaSpw9"},
+                                {name: '布拉格天文鐘免排隊門票(即買即用)', url: 'https://www.kkday.com/zh-tw/product/267154?cid=11798&pkg_oid=1348878'}
+                            ],
                             note: `早晨漫步建議路線：飯店 → 市民會館 → 火藥塔 → 海柏尼劇院 → 亨利塔。
                             1. 【火藥塔】：布拉格老城區的象徵性入口(「皇家之路」的起點)，漆黑的哥德式外觀曾是儲存火藥的彈藥庫。
                             2. 【市民會館】：布拉格新藝術風格建築的顛峰之作，外牆圓型馬賽克非常精美，是捷克宣佈獨立的歷史場所。
@@ -1216,7 +1219,7 @@
                             1. 【無限書塔】：位於市立圖書館大廳，由鏡子反射造成的書洞隧道，是拍照熱點。
                             2. 【泰恩教堂】：俗稱「魔鬼教堂」，老城最醒目的地標，入口藏在前面的餐廳拱門後方。
                             3. 【老城市政廳】：推薦搭乘螺旋電梯登頂(CZK 300)，是看布拉格全景最輕鬆的方式。
-                            * 11:00 整點前請務必抵達天文鐘下方，觀看著名的門徒報時秀。`
+                            * 11:00 整點前請務必抵達天文鐘下方，觀看著名的十二門徒報時秀。`
                         },
                         {
                             id: "1904c",
@@ -1297,15 +1300,169 @@
                     ]
                 },
                 {
-                    date: "2/20", day: "週五", city: "布拉格", hotel: "Grandium Hotel Prague", startTime: "09:00", timeline: [
-                        { id: "2001", time: "09:00", event: "布拉格城堡", loc: "Prague Castle", type: "sight", ticket: "", note: "" },
-                        { id: "2002", time: "10:30", event: "聖維特大教堂", loc: "St. Vitus Cathedral", type: "sight", ticket: "", note: "" }
+                    date: "2/20",
+                    day: "週五",
+                    city: "布拉格 Prague",
+                    breakfast: "06:30 - 10:30",
+                    startTime: "07:30",
+                    endTime: "21:30",
+                    hotel: "布拉格格蘭迪姆酒店 Grandium Hotel Prague",
+                    hotelNote: "今日行程集中在河對岸的城堡區與小城區，建議穿著防風外套，河邊體感溫度較低。",
+                    timeline: [
+                        {
+                            id: "2001",
+                            time: "07:30",
+                            event: "清晨查理大橋攝影",
+                            loc: "Karlův most",
+                            type: "sight",
+                            note: "趁觀光客尚未湧入前拍攝無人的橋身與城堡遠景。\n打卡：老城橋塔下的聖像與石板路景觀\n早晨陽光會灑在城堡區，是絕佳順光位"
+                        },
+                        {
+                            id: "2002",
+                            time: "09:00",
+                            event: "搭乘電車前往城堡區",
+                            loc: "Tram 22 - Pražský hrad",
+                            type: "transport",
+                            note: "從 Malostranská 站搭乘 22 號電車\n直達城堡最高點，省去步行爬坡體力。"
+                        },
+                        {
+                            id: "2003",
+                            time: "10:00",
+                            event: "布拉格城堡巡禮",
+                            loc: "Prague Castle",
+                            type: "sight",
+                            ticket: [
+                                {
+                                    name:"路線攻略", 
+                                    url: "https://journey.tw/st-vitus-cathedral/"
+                                },
+                                {
+                                    name:"布拉格城堡門票(含語音導覽)", 
+                                    url: "https://drive.google.com/file/d/1HZJ28cibiMsv_Gkeha21XuGERqt34l3I/view?usp=drive_link"
+                                }
+                            ],
+                            note: "參觀聖維特大教堂與黃金小巷，感受波希米亞皇室震撼。\n聖維特大教堂：必看慕夏之窗（彩繪玻璃)\n黃金小巷：尋找卡夫卡曾居住過的 22 號小藍屋"
+                        },
+                        {
+                            id: "2006",
+                            time: "13:00",
+                            event: "午餐：Kuchyň 景觀餐廳",
+                            loc: "Hradčanské nám. 186/1",
+                            type: "food",
+                            note: "位於城堡門口的特色餐廳，可俯瞰布拉格紅屋頂全景。\n建議預約露台座位",
+                            ticket: [{name:"網誌文章", url: ""}]
+                        },
+                        {
+                            id: "2007",
+                            time: "14:30",
+                            event: "城堡階梯與聖尼古拉教堂",
+                            loc: "Zámecké schody / St. Nicholas Church",
+                            type: "sight",
+                            note: "沿著階梯漫步下山，進入小城區參觀華麗的巴洛克教堂。\n階梯拍照：布拉格拍夕陽與街道交錯最美的地方\n聖尼古拉教堂：內部壁畫壯觀，被譽為布拉格最美教堂"
+                        },
+                        {
+                            id: "2008",
+                            time: "16:30",
+                            event: "列儂牆 (Lennon Wall)",
+                            loc: "Velkopřevorské náměstí",
+                            type: "sight",
+                            note: "象徵自由與和平的塗鴉牆，顏色鮮麗適合拍照留念。"
+                        },
+                        {
+                            id: "2009",
+                            time: "17:30",
+                            event: "老城橋塔 (夕陽時段)",
+                            loc: "Old Town Bridge Tower",
+                            ticket: [
+                                {
+                                    name: "老城橋塔門票(官網)",
+                                    url: "https://prague.eu/en/objevujte/old-town-bridge-tower-staromestska-mostecka-vez/"
+                                }
+                            ],
+                            type: "sight",
+                            note: "夕陽時分登塔，捕捉黃金色的查理大橋與遠方城堡。\n共 138 階螺旋梯，無電梯，請體力\n取景：對齊大橋與城堡的 S 型弧度"
+                        },
+                        {
+                            id: "2010",
+                            time: "18:30",
+                            event: "河畔賞鵝與河狸",
+                            loc: "Cihelná ริมน้ำ (Swans Spot)",
+                            type: "sight",
+                            note: "在卡夫卡博物館旁的河岸\n從拍查理大橋的低角度視景非常漂亮，運氣好可見到河狸",
+                        },
+                        {
+                            id: "2011",
+                            time: "19:30",
+                            event: "晚餐：Pork's",
+                            loc: "Pork's Vodičkova",
+                            type: "food",
+                            note: "1.建議從河邊搭乘 18 號電車至 Vodičkova 站直達\n2.品嚐全布拉格最脆的烤豬腳。位置就在查理大橋旁。\n3.必點：脆皮豬腳 (Pork Knuckle)，建議兩三人分食",
+                        }
                     ]
                 },
                 {
-                    date: "2/21", day: "週六", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", startTime: "09:00", timeline: [
-                        { id: "2101", time: "09:00", event: "火車往布達佩斯", loc: "Prague Main Station", type: "transport", ticket: "", note: "" },
-                        { id: "2102", time: "16:00", event: "紐約咖啡館", loc: "New York Café", type: "food", ticket: "", note: "" }
+                    date: "2/21",
+                    day: "週六",
+                    city: "布拉格 → 布達佩斯",
+                    breakfast: "06:30 - 10:30",
+                    startTime: "09:30",
+                    endTime: "21:30",
+                    hotel: "布達佩斯市中心 NH 精選酒店 Hotel NH Collection Budapest City Center",
+                    hotelTicket: "https://drive.google.com/file/d/1v6NBhF6z5j3noA9Bwkf2P3d_Tvbxy989/view?usp=drive_link",
+                    hotelNote: "Check In 時向櫃檯預定明早的紐約宮咖啡早餐",
+                    timeline: [
+                        {
+                            id: "2101",
+                            time: "10:00",
+                            event: "慕夏博物館 Mucha Museum (可選)",
+                            loc: "Mucha Foundation Art Museum",
+                            type: "sight",
+                            note: "展示捷克新藝術大師慕夏 (Alphonse Mucha) 的經典海報與裝飾畫作品。禮品店可不買票進入"
+                        },
+                        {
+                            id: "2102",
+                            time: "11:15",
+                            event: "瓦茨拉夫廣場最後採買與散步",
+                            loc: "Václavské náměstí",
+                            type: "shop",
+                            note: "布拉格最重要的商業廣場，也是新城核心。可在曼菲蘿 (Manufaktura) 或 BATA 進行最後採買，並與壯麗的國家博物館主樓合照留念。隨後漫步回飯店提領行李"
+                        },
+                        {
+                            id: "2103",
+                            time: "12:00",
+                            event: "抵達布拉格火車站",
+                            loc: "Praha hlavní nádraží",
+                            type: "transport",
+                            ticket:[
+                                {name: "Regiojet車票 (已加入 Apple 錢包)", url: "https://drive.google.com/file/d/1-S_4kbHfjGumFfQ4IS6nJkBcL_LAoeWj/view?usp=drive_link"},
+                                {name: "RegioJet休息室", url: "https://maps.app.goo.gl/Jev76rL9CnXB9MP38"},
+                            ],
+                            note: "步行抵達車站。建議先在車站地下一樓的 Billa 超市買好長途火車所需的輕食與水果。 發車1小時前可進Regiojet休息室，享受免費無限供應的義式咖啡、果汁與熱飲，作為上車前的最後整頓與休息。"
+                        },
+                        {
+                            id: "2104",
+                            time: "13:01",
+                            event: "火車：RegioJet 前往布達佩斯",
+                            loc: "Train RJ 1035",
+                            type: "transport",
+                            note: "車程約 7 小時。車內提供免費 Wi-Fi、氣泡水及咖啡。建議在座位上休息，欣賞窗外的波希米亞鄉村景觀。火車會停靠 Budapest-Kelenföld 站，此站設有現代化的無障礙電梯，對攜帶長途大行李的旅客非常友善。"
+                        },
+                        {
+                            id: "2104b",
+                            time: "19:58",
+                            event: "抵達布達佩斯 Budapest-Kelenföld ",
+                            loc: "Budapest-Kelenföld Train",
+                            type: "transport",
+                            note: "此站設有現代化的無障礙電梯，對攜帶長途大行李的旅客非常友善。"
+                        },
+                        {
+                            id: "2105",
+                            time: "20:30",
+                            event: "飯店 Check-in 與簡單晚餐",
+                            loc: "Hotel NH Collection Budapest City Center",
+                            type: "food",
+                            note: "抵達布達佩斯飯店辦理入住。若體力尚可，可於飯店週邊尋找簡單熟食，或是享用從布拉格車站預先買好的備用輕食，早點休息以應對隔日的布達佩斯城市巡禮。"
+                        }
                     ]
                 },
                 {
@@ -1459,6 +1616,13 @@
                     food: ["烤鴨佐紫甘藍", "皮爾森啤酒"],
                     shop: ["曼菲蘿 (Manufaktura) 啤酒花保養品", "水晶玻璃"],
                     tips: "人多的地方(如查理大橋)請務必將背包背在前面，小心扒手。",
+                    transport: [
+                        {
+                            name: "🚋 PID 大眾運輸 (交通 APP)",
+                            note: "使用官方 APP 購票後不會自動生效，要在上車前點擊 「Activate」。啟用後會有 2 分鐘的倒數，倒數結束後 QR Code 才會生效",
+                            download: "https://apps.apple.com/tw/app/pid-l%C3%ADta%C4%8Dka/id983071129",
+                        }
+                    ],
                     restaurants: [
                         { 
                             name: "🏰 Café Imperial (帝國咖啡廳)", 
@@ -1912,6 +2076,21 @@
                         </div>
                     `;
                 });
+
+                let transportHtml = '';
+                data.transport.forEach(transport => {
+                    transportHtml += `
+                        <div class="border-b border-gray-100 py-3 last:border-0">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-euro-text text-sm">${transport.name}</span>
+                                <a href="${transport.download}" target="_blank" class="text-blue-500 text-xs flex items-center">
+                                    <i class="fas fa-download mr-1"></i>下載連結
+                                </a>
+                            </div>
+                            <p class="text-xs text-gray-500 leading-relaxed">${transport.note}</p>
+                        </div>
+                    `;
+                });
     
                 // Helper to generate list items
                 const renderList = (arr, icon) => arr ? arr.map(s => `<li class="mb-1"><i class="fas ${icon} text-euro-secondary text-xs mr-2"></i>${s}</li>`).join('') : '';
@@ -1932,6 +2111,10 @@
                         </div>
 
                         <div class="mt-4 space-y-4">
+                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-300">
+                                <h4 class="font-bold text-gray-800 text-sm mb-2">交通</h4>
+                                <div>${transportHtml}</div>
+                            </div>
                             <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-euro-primary">
                                 <h4 class="font-bold text-gray-800 text-sm mb-2">必訪景點</h4>
                                 <ul class="text-sm text-gray-600">${renderList(data.spots, 'fa-check')}</ul>
