@@ -201,7 +201,7 @@
             .note-summary {
                 /* 核心邏輯：開啟多行省略模式 */
                 display: -webkit-box;
-                -webkit-line-clamp: 5;      /* 關鍵：設定最大行數為 5 */
+                -webkit-line-clamp: 4;      /* 關鍵：設定最大行數為 5 */
                 -webkit-box-orient: vertical;
                 
                 /* 隱藏超出部分 */
@@ -210,7 +210,7 @@
                 
                 /* 建議：設定行高讓排版更穩定 */
                 line-height: 1.5;
-                max-height: calc(1.5em * 5); /* 安全機制：行高 x 行數 */
+                max-height: calc(1.5em * 4); /* 安全機制：行高 x 行數 */
                 
                 /* 處理您提到的開頭空白問題 */
                 white-space: pre-line;       /* 保留換行但合併多餘空白 */
@@ -500,7 +500,7 @@
                             <span class="text-gray-500">保單號碼</span>
                             <div class="border-b border-gray-100 pb-2">
                                 <p class="font-mono font-bold">050026CT20064885 (王鈺昕)</p>
-                                <p class="font-mono font-bold">050026CT20064885 (邱幼美)</p>
+                                <p class="font-mono font-bold">050026CT20064917 (邱幼美)</p>
                             </div>
                         </div>
                         <div class="flex justify-between border-b border-gray-100 pb-2">
@@ -1393,7 +1393,7 @@
                         {
                             id: "2011",
                             time: "19:30",
-                            event: "晚餐：Pork's",
+                            event: "晚餐：Pork's (預約: 19:30)",
                             loc: "Pork's Vodičkova",
                             type: "food",
                             note: "1.建議從河邊搭乘 18 號電車至 Vodičkova 站直達\n2.品嚐全布拉格最脆的烤豬腳。位置就在查理大橋旁。\n3.必點：脆皮豬腳 (Pork Knuckle)，建議兩三人分食",
@@ -1407,7 +1407,7 @@
                     breakfast: "06:30 - 10:30",
                     startTime: "09:30",
                     endTime: "21:30",
-                    hotel: "布達佩斯市中心 NH 精選酒店 Hotel NH Collection Budapest City Center",
+                    hotel: "Hotel NH Collection Budapest City Center",
                     hotelTicket: "https://drive.google.com/file/d/1v6NBhF6z5j3noA9Bwkf2P3d_Tvbxy989/view?usp=drive_link",
                     hotelNote: "Check In 時向櫃檯預定明早的紐約宮咖啡早餐",
                     timeline: [
@@ -1453,7 +1453,7 @@
                             event: "抵達布達佩斯 Budapest-Kelenföld ",
                             loc: "Budapest-Kelenföld Train",
                             type: "transport",
-                            note: "此站設有現代化的無障礙電梯，對攜帶長途大行李的旅客非常友善。"
+                            note: "此站設有現代化的無障礙電梯，對攜帶長途大行李的旅客非常友善。\n 搭乘地鐵M4前往飯店(可在App買票)"
                         },
                         {
                             id: "2105",
@@ -1466,21 +1466,282 @@
                     ]
                 },
                 {
-                    date: "2/22", day: "週日", city: "布達佩斯", hotel: "Hotel NH Collection Budapest", startTime: "09:00", timeline: [
-                        { id: "2201", time: "09:00", event: "聖伊什特萬聖殿", loc: "St. Stephen's Basilica", type: "sight", ticket: "", note: "" },
-                        { id: "2202", time: "18:00", event: "多瑙河遊船", loc: "Danube River Budapest", type: "food", ticket: "", note: "" }
+                    date: "2/22",
+                    day: "週日",
+                    city: "布達佩斯 Budapest",
+                    breakfast: "",
+                    startTime: "07:00",
+                    endTime: "22:00",
+                    hotel: "Hotel NH Collection Budapest City Center",
+                    hotelNote: "今日行程集中在佩斯區。利用地鐵 M2 線與 2 號路面電車可節省體力",
+                    timeline: [
+                        {
+                            id: "2201",
+                            time: "07:00",
+                            event: "早餐 - 紐約宮殿咖啡館 (New York Café)",
+                            loc: "New York Café Budapest",
+                            type: "food",
+                            hours: "07:00–01:00",
+                            note: "在『世界最美』咖啡廳揭開序幕。\n現場有鋼琴與小提琴演奏，華麗的巴洛克裝潢非常適合為長輩留下精美照片。"
+                        },
+                        {
+                            id: "2202",
+                            time: "9:30",
+                            event: "猶太文化遺產徒步之旅",
+                            loc: "Dohány utcai Zsinagóga",
+                            type: "sight",
+                            hours: "10:00–16:00",
+                            ticket: [
+                                {
+                                    name: "線上購票",
+                                    url: "https://jewishtourhungary.com/en/cart"
+                                }
+                            ],
+                            note: "包含煙草街會堂、猶太博物館及生命之樹。週日是猶太區最熱鬧的時段，導覽約 1.5 - 2 小時。請注意安檢嚴格，男性進入會堂需戴上門口提供的小帽子 (Kippah)。"
+                        },
+                        {
+                            id: "2203",
+                            time: "12:00",
+                            event: "午餐：Mazel Tov (猶太區森林系餐廳)",
+                            loc: "Budapest, Akácfa u. 47, 1073 匈牙利",
+                            type: "food",
+                            note: "位於猶太區，是廢墟建築改建的溫室風格餐廳。環境充滿綠意且光線明亮，非常適合長輩休息用餐。推薦鷹嘴豆泥、中東風烤肉與特製檸檬汁，口味清新不油膩。"
+                        },
+                        {
+                            id: "2204",
+                            time: "14:30",
+                            event: "聖伊什特萬聖殿 (St. Stephen's Basilica)",
+                            loc: "Szent István Bazilika",
+                            type: "sight",
+                            ticket: [
+                                {
+                                    name: "線上購票",
+                                    url: "https://www.bazilika.jegy.eu/"
+                                }
+                            ],
+                            note: "購買all in one 套票可上觀景台\n佩斯區最高建築。週日彌撒後開放觀光，內部大理石與金箔裝飾極其奢華\n可搭電梯登上圓頂觀景台俯瞰市景，聖殿前的廣場氣氛悠閒，適合簡單漫步。"
+                        },
+                        {
+                            id: "2205",
+                            time: "16:00",
+                            event: "國家歌劇院",
+                            loc: "Magyar Állami Operaház",
+                            type: "sight",
+                            note: "先至歌劇院售票處詢問當晚《奧涅金》Discount 票券。隨後搭地鐵 M2 前往國會大廈拍攝雄偉外觀，並步行至河岸觀看『多瑙河畔之鞋』，感受歷史的重量。"
+                        },
+                        {
+                            id: "2206",
+                            time: "16:00",
+                            event: "國會大廈",
+                            loc: "Országház",
+                            type: "sight",
+                            note: "搭地鐵 M2 前往國會大廈，並步行至河岸觀看『多瑙河畔之鞋』，感受歷史的重量。"
+                        },
+                        {
+                            id: "2207",
+                            time: "18:00",
+                            event: "多瑙河畔漫步與塞切尼鏈橋",
+                            loc: "Széchenyi lánchíd",
+                            type: "sight",
+                            note: "沿著河岸走往鏈橋，此時正值藍色時刻 (Blue Hour)。整修後的鏈橋與對岸漁人堡點燈後非常迷人。這段路平坦好走，是布達佩斯風景最經典的一段散步路線。"
+                        },
+                        {
+                            id: "2208",
+                            time: "19:30",
+                            event: "晚餐：Comme Chez Soi",
+                            loc: "Comme Chez Soi",
+                            type: "food",
+                            note: "極高評價匈式西餐\n位於鏈橋附近，以熱情的服務與巨大的份量聞名。推薦鴨肝與海鮮義大利麵。這家店極度熱門且座位少，必須提前數週電話預約。若沒預約，可改往附近的 Duna Corso。"
+                        },
+                        {
+                            id: "2209",
+                            time: "21:00",
+                            event: "多瑙河夜晚遊船 (Danube Night Cruise)",
+                            loc: "Dock 6 / Dock 7",
+                            type: "transport",
+                            ticket: [
+                                {
+                                    name: "KLOOK訂票",
+                                    url: "https://s.klook.com/c/my45DA9WwO"
+                                }
+                            ],
+                            note: "以 1 小時夜遊作為行程收尾。從水上仰望金光閃閃的國會大廈與布達皇宮，是布達佩斯最震撼的風景。船艙內有暖氣，長輩可舒適地坐著欣賞世界遺產夜景。"
+                        }
                     ]
                 },
                 {
-                    date: "2/23", day: "週一", city: "布達佩斯", hotel: "Novotel Budapest Danube", startTime: "09:00", timeline: [
-                        { id: "2301", time: "09:00", event: "漁人堡", loc: "Fisherman's Bastion", type: "sight", ticket: "", note: "" },
-                        { id: "2302", time: "19:00", event: "國會大廈夜景", loc: "Hungarian Parliament Building", type: "sight", ticket: "", note: "" }
+                    date: "2/23",
+                    day: "週一",
+                    city: "布達佩斯 Budapest",
+                    startTime: "06:30",
+                    endTime: "21:30",
+                    hotel: "Novotel Budapest Danube (布達佩斯多瑙河諾富特酒店)",
+                    hotelTicket: "https://drive.google.com/file/d/1iNtpoPHVAYVRM6HP4oBr3MkshvjXNIOQ/view?usp=drive_link",
+                    hotelNote: "今日從佩斯區搬至布達區。晚間入住飯店後即可直接在房間或飯店門口欣賞金光閃閃的國會大廈正面夜景。",
+                    timeline: [
+                        {
+                            id: "2301",
+                            time: "06:30",
+                            event: "漁人堡 日出 (可選)",
+                            loc: "Halászbástya",
+                            type: "sight",
+                            note: "清晨是漁人堡人最少、光線最溫柔的時刻。從這裡俯瞰對岸國會大廈染上金黃晨曦，是布達佩斯最經典的攝影位。此時段不需門票即可登上觀景台，適合幫長輩拍下無人空景大作。"
+                        },
+                        {
+                            id: "2302",
+                            time: "09:00",
+                            event: "早餐：Central Grand Cafe",
+                            loc: "Centrál Grand Cafe",
+                            type: "food",
+                            note: "預約9:00\n擁有 130 年歷史的文學咖啡館。相較於紐約宮殿，這裡環境更安靜優雅。推薦歐式早餐組合配上一杯熱咖啡，作為晨間攝影後的能量補給。用餐後步行至飯店辦理退房手續。"
+                        },
+                        {
+                            id: "2303",
+                            time: "10:30",
+                            event: "飯店 Check-out 與行李寄放",
+                            loc: "Hotel NH Collection Budapest City Center",
+                            type: "transport",
+                            note: "辦理退房並將大件行李暫存櫃檯。今日跨區行程建議先將行李留在佩斯區，輕裝前往城市公園與市場，待傍晚再回飯店提領並移動至新的 Novotel 飯店。"
+                        },
+                        {
+                            id: "2304",
+                            time: "11:30",
+                            event: "塞切尼溫泉與城市公園",
+                            loc: "Széchenyi Gyógyfürdő és Uszoda",
+                            type: "sight",
+                            ticket: [
+                                {
+                                    name: "官網購票(40.5歐)",
+                                    url: "https://book.budapest-baths.com/book/12446/select/?_gl=1%2A12bvw5h%2A_gcl_aw%2AR0NMLjE3NzA1ODQ5OTMuQ2owS0NRaUFoYUhNQmhEMkFSSXNBUEFVX0Q2VzlkdTZyemdfUXpjaDdXU1U4VHVudEJ2amh4UzVMb0twd2tGLURIRlFMNlAzR1ZSdVdKQWFBalkxRUFMd193Y0I.%2A_gcl_au%2AOTgxNTY3NjU4LjE3NzA1ODQ0OTg.%2A_ga%2AODU2NzgwNjk2LjE3NzA1ODQ0OTk.%2A_ga_Y45PC9R73C%2AczE3NzA1ODQ0OTkkbzEkZzEkdDE3NzA1ODQ5OTIkajI2JGwwJGgw&cookieBanner=false"
+                                }
+                            ],
+                            note: "可刷卡\n帶鞋,毛巾,洗髪乳,沐浴乳\n鄰近城市公園(英雄廣場/沃伊達奇城堡)"
+                        },
+                        {
+                            id: "2305",
+                            time: "13:30",
+                            event: "午餐：Borbirosag (酒窖餐廳)",
+                            loc: "Market 1897- Kitchen & wine by Borbíróság",
+                            type: "food",
+                            note: "緊鄰中央市場，環境精緻。主打匈牙利創意料理，推薦鴨肝燉飯與嫩煎鱸魚"
+                        },
+                        {
+                            id: "2306",
+                            time: "15:00",
+                            event: "布達佩斯中央市場 (Great Market Hall)",
+                            loc: "Nagycsarnok",
+                            type: "shop",
+                            note: "週一 17:00 關門\n一樓可買紅椒粉與鵝肝罐頭，二樓則有手工藝品\n採買後直接由瓦茲街 (Váci u.) 散步往北移動，感受熱鬧的步行街氛圍。"
+                        },
+                        {
+                            id: "2307",
+                            time: "17:30",
+                            event: "回 NH 飯店取行李並移動至 Novotel",
+                            loc: "Hotel NH Collection → Novotel",
+                            type: "transport",
+                            note: "回到 NH Collection 提取行李，建議使用 Bolt APP 叫計程車跨河前往 Novotel 飯店。這段車程約 15 分鐘，可避免拖著大行李在古老地鐵站中尋找電梯的疲勞。"
+                        },
+                        {
+                            id: "2308",
+                            time: "18:30",
+                            event: "Novotel 飯店 Check-in 與休息",
+                            loc: "Novotel Budapest Danube",
+                            type: "transport",
+                            note: "預訂的是 Superior Room With Parliament View，推開窗或在床頭就能看到金光燦燦的國會大廈正面全景"
+                        },
+                        {
+                            id: "2309",
+                            time: "19:30",
+                            event: "晚餐: Kacsa Étterem",
+                            loc: "Kacsa Étterem",
+                            type: "food",
+                            hours: "12:00–22:30",
+                            note: ""
+                        }
                     ]
                 },
                 {
-                    date: "2/24", day: "週二", city: "維也納", hotel: "Novotel Wien Hauptbahnhof", startTime: "09:00", timeline: [
-                        { id: "2401", time: "09:00", event: "火車往維也納", loc: "Budapest Keleti", type: "transport", ticket: "", note: "" },
-                        { id: "2402", time: "13:00", event: "熊布朗宮", loc: "Schönbrunn Palace", type: "sight", ticket: "", note: "" }
+                    date: "2/24",
+                    day: "週二",
+                    city: "布達佩斯 Budapest",
+                    breakfast: "08:30",
+                    startTime: "08:30",
+                    endTime: "21:00",
+                    hotel: "Novotel Wien Hauptbahnhof (維也納中央車站諾富特酒店)",
+                    hotelTicket: "https://drive.google.com/file/d/1J762A0rRzakAj_DIdnCeov60ZOAbdREg/view?usp=drive_link",
+                    hotelNote: "",
+                    timeline: [
+                        {
+                            id: "2401",
+                            time: "07:30",
+                            event: "飯店早餐與最後國會大廈美景",
+                            loc: "Novotel Budapest Danube",
+                            type: "food",
+                            note: "在飯店享受正對國會大廈的早餐。餐後辦理退房並寄放行李。隨後可搭乘 16 號公車或在 Clark Ádám tér 搭乘復古纜車 (Sikló) 登上城堡山。"
+                        },
+                        {
+                            id: "2402",
+                            time: "10:00",
+                            event: "漁人堡與馬加什教堂",
+                            loc: "Halászbástya",
+                            type: "sight",
+                            note: "參觀擁有彩色磁磚屋頂的馬加什教堂，以及白石建築的漁人堡。此時陽光正斜照在對岸的佩斯區，是拍攝國會大廈全景的最佳光線。"
+                        },
+                        {
+                            id: "2403",
+                            time: "11:30",
+                            event: "岩石醫院 (Hospital in the Rock)",
+                            loc: "Sziklakórház Atombunker Múzeum",
+                            type: "sight",
+                            note: "這是一座隱藏在城堡山下的天然地堡醫院，曾用於二戰與冷戰時期。內部氣溫全年維持在 15°C，建議提醒長輩進入前穿上外套。導覽約 60 分鐘，是非常震撼的歷史體驗。"
+                        },
+                        {
+                            id: "2404",
+                            time: "13:00",
+                            event: "午餐/咖啡：Royal Guard Café",
+                            loc: "Royal Guard Café",
+                            type: "food",
+                            note: "位於城堡區的新整修建築，環境明亮且氣氛高雅。提供精緻的匈牙利甜點與輕食餐點。餐廳內有無障礙廁所與舒適的沙發位，適合在下午行程前讓長輩充分休息。"
+                        },
+                        {
+                            id: "2405",
+                            time: "14:30",
+                            event: "布達城堡與匈牙利國家美術館",
+                            loc: "Budavári Palota",
+                            type: "sight",
+                            note: "漫步於昔日的皇宮區，欣賞宏偉的圓頂建築。若時間充裕可進入國家美術館 (可選) 參觀精美的古典繪畫與中世紀祭壇。城堡露台是觀看塞切尼鏈橋與多瑙河弧線的最佳位置。"
+                        },
+                        {
+                            id: "2406",
+                            time: "16:30",
+                            event: "回飯店取行李並前往車站",
+                            loc: "Novotel Budapest Danube",
+                            type: "transport",
+                            note: "搭乘公車下山回到 Novotel 提領行李。隨後直接在飯店門口的『Batthyány tér』搭乘 19 或 41 號路面電車，約 20 分鐘即可直達 Kelenföld 火車站，不需轉乘且路面平坦。"
+                        },
+                        {
+                            id: "2407",
+                            time: "17:58",
+                            event: "火車：RegioJet 前往維也納(RJ 1032)",
+                            loc: "Budapest, Kelenföld",
+                            type: "transport",
+                            ticket:[
+                                {
+                                    name: "RegioJet車票",
+                                    url: "https://drive.google.com/file/d/1GklG9GCa5JpQ57KEnWqTRg3JTQCTKwlu/view?usp=drive_link"
+                                },
+                            ],
+                            
+                            note: "車程約 2 小時 29 分。Regiojet 車內提供免費熱飲與 Wi-Fi。建議可在車上點購輕食作為晚餐，火車將於 20:27 抵達維也納總站 (Vienna Hbf)。"
+                        },
+                        {
+                            id: "2408",
+                            time: "20:45",
+                            event: "抵達維也納與飯店 Check-in",
+                            loc: "Novotel Wien Hauptbahnhof",
+                            type: "transport",
+                            note: "下車後步行前往維也納總站周邊飯店辦理入住。"
+                        }
                     ]
                 },
                 {
@@ -1674,6 +1935,13 @@
                     food: ["匈牙利牛肉湯 (Goulash)", "鵝肝料理"],
                     shop: ["紅椒粉 (Paprika)", "貴腐酒 (Tokaji)"],
                     tips: "地鐵手扶梯速度非常快，搭乘時請握緊扶手。",
+                    transport: [
+                    {
+                        name: "🚋 BudapestGO (交通 APP)",
+                        note: "購票後需手動驗票。搭乘公車或電車時，需掃描車門外的 QR Code 貼紙或使用 NFC 驗票；搭乘地鐵則在進入手扶梯前的閘門處掃描。驗票後手機會出現動態動畫供查票。",
+                        download: "https://apps.apple.com/hu/app/budapestgo/id916193835?l=hu",
+                    }
+                    ],
                     restaurants: []
                 },
                 vienna: {
@@ -1699,7 +1967,8 @@
                 { id: 8, text: "保暖衣物", done: false },
                 { id: 9, text: "暖暖包(仁川機場需隨身)", done: false },
                 { id: 10, text: "頭枕(隨身)", done: false },
-                { id: 11, text: "", done: false },
+                { id: 11, text: "清潔用品(沐浴乳/洗髮精/洗面乳/牙膏)", done: false },
+                { id: 11, text: "個人衛生用品(牙刷/棉花棒/衛生棉/卸妝棉)", done: false },
             ];
     
             // ================= INIT & UTILS =================
@@ -2080,9 +2349,9 @@
                 let transportHtml = '';
                 data.transport.forEach(transport => {
                     transportHtml += `
-                        <div class="border-b border-gray-100 py-3 last:border-0">
+                        <div class="border-b border-gray-100 py-1 last:border-0">
                             <div class="flex justify-between items-start mb-1">
-                                <span class="font-bold text-euro-text text-sm">${transport.name}</span>
+                                <span class="font-bold text-euro-text text-xs">${transport.name}</span>
                                 <a href="${transport.download}" target="_blank" class="text-blue-500 text-xs flex items-center">
                                     <i class="fas fa-download mr-1"></i>下載連結
                                 </a>
@@ -2111,7 +2380,7 @@
                         </div>
 
                         <div class="mt-4 space-y-4">
-                            <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-300">
+                            <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-euro-sencondary">
                                 <h4 class="font-bold text-gray-800 text-sm mb-2">交通</h4>
                                 <div>${transportHtml}</div>
                             </div>
