@@ -44,6 +44,12 @@
         </script>
 
         <style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .scroll-mt-20 {
+                scroll-margin-top: 5rem; /* 預留頂部空間，避免標題被遮住 */
+            }
             body {
                 background-color: #FDFCF8;
                 color: #3D3D3D;
@@ -147,6 +153,35 @@
 
             .note-block {
                 word-break: break-all; /* 防止長網址或長英文撐破版面 */
+            }
+
+            /* 隱藏導覽列的捲軸但保留滑動功能 */
+            .no-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            /* 預設按鈕：灰色、細邊 */
+            .date-tab-btn {
+                transition: all 0.3s ease;
+                border-left-width: 2px;
+            }
+
+            /* 醒目按鈕：藍色、粗邊、放大感 */
+            .date-tab-btn.active {
+                color: #A98467 !important; /* 或者使用您的 var(--euro-primary) */
+                border-left-color: #1e40af !important;
+                font-weight: 800 !important;
+                background-color: rgba(181, 110, 4, 0.05); /* 淡淡的背景色 */
+                transform: scale(1.05);
+            }
+
+            /* 讓導覽列捲軸更平滑 */
+            #side-date-tabs {
+                scroll-behavior: smooth;
             }
         </style>
     </head>
@@ -310,7 +345,15 @@
             </div>
 
             <div id="tab-plan" class="tab-content active">
-                <div id="itinerary-list" class="space-y-6"></div>
+                <div class="flex gap-4 items-start max-w-6xl mx-auto px-4 py-8">
+                    <nav class="hidden lg:block sticky top-24 w-32 flex-shrink-0 self-start">
+                        <div id="side-date-tabs" 
+                             class="flex flex-col gap-4 border-l-2 border-gray-100 pl-4 max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar">
+                            </div>
+                    </nav>
+                
+                    <div id="itinerary-list" class="flex-1 space-y-8"></div>
+                </div>
             </div>
 
             <div id="tab-guide" class="tab-content">
@@ -419,15 +462,50 @@
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between border-b border-gray-100 pb-2">
                             <span class="text-gray-500">保單號碼</span>
-                            <span class="font-mono font-bold">0500-1234ABCD (範例)</span>
+                            <div class="border-b border-gray-100 pb-2">
+                                <p class="font-mono font-bold">050026CT20064885 (王鈺昕)</p>
+                                <p class="font-mono font-bold">050026CT20064885 (邱幼美)</p>
+                            </div>
                         </div>
                         <div class="flex justify-between border-b border-gray-100 pb-2">
                             <span class="text-gray-500">海外緊急救援</span>
-                            <a href="tel:+886223459292" class="font-bold text-blue-600">+886-2-2345-9292</a>
+                            <div class="border-b border-gray-100 pb-2 flex flex-col items-end gap-2">
+                                <a href="tel:+886225636292" class="block font-bold text-blue-600 mb-2 text-sm"> 
+                                    <i class="fas fa-phone-alt mr-1"></i>+886-2-25636292
+                                </a>
+                                <button onclick="goToUrl(`https://b2c.518fb.com/TravelHouseKeeper/urgent#`)" 
+                                        class="text-xs border border-euro-primary text-euro-primary px-3 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap">
+                                    官網說明
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
+                            <strong class="text-gray-800">若使用當地公共電話：</strong><br>
+                            撥打: 當地國際冠碼 -886-2-25636292
                         </div>
                         <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
                             <strong class="text-gray-800">理賠提醒：</strong><br>
                             若遇班機延誤或行李遺失，請務必索取「航空公司證明」。若遇生病就醫，請保留「診斷證明」與「收據正本」。
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
+                            <p class="text-xs text-gray-700 leading-relaxed mb-2">
+                                <strong>💡 班機延誤理賠重點：</strong><br>
+                                <ul class="list-disc ml-4 mt-1 space-y-1">
+                                    <li><strong>滿 4 小時</strong>起賠，每滿 4 小時給付一次。</li>
+                                    <li>最多理賠 <strong>2 次</strong> 事故。</li>
+                                    <li>涵蓋：錯過轉機、自行購買的替代班機。</li>
+                                </ul>
+                            </p>
+                        </div>
+                       <div class="bg-gray-50 p-3 rounded text-xs text-gray-600 leading-relaxed">
+                            <p class="text-xs text-gray-700 leading-relaxed mb-2">
+                                <strong><i class="fas fa-briefcase mr-1"></i>行李延誤理賠要點：</strong>
+                                <ul class="list-disc ml-4 mt-1 space-y-1">
+                                    <li>抵達目的地<strong>滿 6 小時</strong>未領得行李即理賠。</li>
+                                    <li><strong>回台灣/居住地</strong>發生的延誤不理賠。</li>
+                                    <li>須領有「託運行李領取單」才符合資格。</li>
+                                </ul>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -730,6 +808,10 @@
                                 { 
                                     name: "840公車時刻表", 
                                     url: "https://richard.at/wp-content/uploads/2025/12/FP-SVV-Linie840_Bus840_Salzburg_Hauptbahnhof%E2%80%93Anif%E2%80%93Marktschellenberg%E2%80%93Berchtesgaden%E2%80%93Unterstein%E2%80%93K%C3%B6nigssee%E2%80%93Jennerbahn_WINTERFAHRPLAN_WINTERTIMETABLE_14.12.2025-23.05.2026.pdf" 
+                                },
+                                {
+                                    name: "840上車月台資訊",
+                                    url: "https://albus.at/de/linie-840-watzmannexpress-2020/"
                                 }
                             ],
                             note: "08:10發車\n 一日票 14.1€ (只收現金)\n 假日最早班次為 08:10，下一班為 08:40\n建議坐在右側 風景較佳"
@@ -774,6 +856,10 @@
 								{
 									name: "鹽礦門票",
 									url: "https://drive.google.com/open?id=1gdQIQYLt0Smsu807PwRZ2cuw0nfmDXPQ"
+                                },
+                                { 
+                                    name: "840公車時刻表", 
+                                    url: "https://richard.at/wp-content/uploads/2025/12/FP-SVV-Linie840_Bus840_Salzburg_Hauptbahnhof%E2%80%93Anif%E2%80%93Marktschellenberg%E2%80%93Berchtesgaden%E2%80%93Unterstein%E2%80%93K%C3%B6nigssee%E2%80%93Jennerbahn_WINTERFAHRPLAN_WINTERTIMETABLE_14.12.2025-23.05.2026.pdf" 
                                 }
 							]
                         },
@@ -783,7 +869,13 @@
                             event: "[840公車] 貝西特斯加登 → 薩爾斯堡舊城區",
                             loc: "薩爾斯堡舊城區",
                             type: "transport",
-                            note: "最晚搭17:45公車出發\n 使用一日票\n 建議坐在左側 風景較佳"
+                            note: "最晚搭17:45公車出發\n 使用一日票\n 建議坐在左側 風景較佳",
+                            ticket: [
+                                { 
+                                    name: "840公車時刻表", 
+                                    url: "https://richard.at/wp-content/uploads/2025/12/FP-SVV-Linie840_Bus840_Salzburg_Hauptbahnhof%E2%80%93Anif%E2%80%93Marktschellenberg%E2%80%93Berchtesgaden%E2%80%93Unterstein%E2%80%93K%C3%B6nigssee%E2%80%93Jennerbahn_WINTERFAHRPLAN_WINTERTIMETABLE_14.12.2025-23.05.2026.pdf" 
+                                }
+                            ]
                         },
 						{
                             id: "1507",
@@ -811,7 +903,7 @@
                     startTime: "08:30",
                     endTime: "20:00",
                     hotel: "哈修塔特歷史酒店 Heritage Hotel Hallstatt",
-                    breakfast: "07:00 - 10:00",
+                    breakfast: "7:00~10:00",
                     hotelTicket: "https://drive.google.com/file/d/1RDgacFdGlVSxtcT7mtrbzKzTclPSz0q-/view?usp=drive_link", 
                     timeline: [
                         {
@@ -838,7 +930,7 @@
                             event: "搭乘公車 150 前往 Bad Ischl",
                             loc: "Salzburg Hofwirt (Bus 150)",
                             type: "transport",
-                            note: `1. 使用 Salzburg Guest Mobility Ticket (含蓋此路段)。\n2. 車程約 1.5 小時，沿途湖光山色非常漂亮。`
+                            note: `1. 使用 Salzburg Guest Mobility Ticket (含蓋此路段)。\n2. 車程約 1.5 小時，沿途湖光山色非常漂亮(建議坐左側)`
                         },
                         {
                             id: "1604",
@@ -877,15 +969,153 @@
                     ]
                 },
                 {
-                    date: "2/17", day: "週二", city: "庫倫洛夫", hotel: "Hotel Dvořák Český Krumlov", startTime: "09:00", timeline: [
-                        { id: "1701", time: "10:00", event: "包車前往 CK", loc: "Český Krumlov", type: "transport", ticket: "", note: "司機 Mr. Novak" },
-                        { id: "1702", time: "13:00", event: "彩繪塔", loc: "Český Krumlov Castle", type: "sight", ticket: "", note: "" }
+                    date: "2/17",
+                    day: "週二",
+                    city: "哈修塔特 → 庫倫洛夫",
+                    startTime: "07:30",
+                    endTime: "21:30",
+                    hotel: "Hotel Dvořák Český Krumlov", 
+                    hotelTicket: "https://drive.google.com/file/d/19P7KP2gehFFk0Ec_6f2z5LQZ5tCpwiQE/view?usp=drive_link",
+                    breakfast: "07:30 - 10:30",
+                    hotelNote: `1. 飯店位於老城區入口處，靠近彩繪塔。\n2. 飯店提供代叫計程車服務(隔天去巴士站可用)。`,
+                    timeline: [
+                        {
+                            id: "1701",
+                            time: "09:00",
+                            event: "哈修塔特晨間遊覽",
+                            loc: "Hallstatt Old Town",
+                            type: "sight",
+                            note: "把握早晨遊客較少時前往「經典拍照點(Classic View)」拍照，避開人潮。"
+                        },
+                        {
+                            id: "1702",
+                            time: "12:00",
+                            event: "哈修塔特午餐 / 準備退房",
+                            loc: "Hallstatt Lahn",
+                            type: "food",
+                            note: "建議在 Lahn 碼頭附近簡單用餐，方便準時前往接駁車集合點。"
+                        },
+                        {
+                            id: "1703",
+                            time: "13:30",
+                            event: "CK Shuttle 集合 (前往 CK 小鎮)",
+                            loc: "Hallstatt Lahn (停車場/巴士站)",
+                            type: "transport",
+                            note: `集合座標：47° 33' 23.2" N, 13° 38' 45.9" E \n* 請提前 10-15 分鐘抵達。 \n* 司機會在 Lahn 巴士站附近的候車區找人。`,
+                            ticket: "https://drive.google.com/file/d/1EvtbCajFnR9L3kAUeus3tWeLP29TeAKJ/view?usp=drive_link"
+                        },
+                        {
+                            id: "1704",
+                            time: "16:30",
+                            event: "抵達 CK 小鎮 & 飯店入住",
+                            loc: "Hotel Dvořák Český Krumlov",
+                            type: "hotel",
+                            note: "接駁車通常會送達飯店門口或老城入口，Check-in 後稍作休息。",
+                            ticket: "https://drive.google.com/file/d/19P7KP2gehFFk0Ec_6f2z5LQZ5tCpwiQE/view?usp=drive_link"
+                        },
+                        {
+                            id: "1705",
+                            time: "17:30",
+                            event: "CK 小鎮黃昏遊覽",
+                            loc: "Český Krumlov Old Town",
+                            type: "sight",
+                            note: "此時彩繪塔會打燈，老城區的夜景非常適合散步。"
+                        },
+                        {
+                            id: "1706",
+                            time: "19:30",
+                            event: "地窖餐廳晚餐 (Krčma Šatlava)",
+                            loc: "Krčma v Šatlavské ulici",
+                            type: "food",
+                            note: "預約 19:30。推薦：炭烤豬腳、烤洋蔥湯、捷克黑啤酒。",
+                            ticket: "http://www.satlava.cz/"
+                        }
                     ]
                 },
                 {
-                    date: "2/18", day: "週三", city: "布拉格", hotel: "Art Deco Imperial Hotel", startTime: "09:00", timeline: [
-                        { id: "1801", time: "13:00", event: "前往布拉格", loc: "Prague", type: "transport", ticket: "", note: "" },
-                        { id: "1802", time: "17:00", event: "帝國咖啡館", loc: "Café Imperial", type: "food", ticket: "", note: "" }
+                    date: "2/18",
+                    day: "週三",
+                    city: "庫倫洛夫 → 布拉格",
+                    breakfast: "7:30 ~ 10:00",
+                    startTime: "09:00",
+                    endTime: "21:30",
+                    hotel: "帝國酒店 Art Deco Imperial Hotel",
+                    breakfast: "07:00 - 10:00",
+                    hotelTicket: "https://drive.google.com/file/d/1IwX-XcgKfdIVtyb319InSfns-UooQDbz/view?usp=drive_link",
+                    hotelNote: `1. 帝國酒店位於布拉格 1 區，地理位置優越。\n2. 飯店著名的 Cafe Imperial 早餐非常有名，明天可以期待。`,
+                    timeline: [
+                        {
+                            id: "1801",
+                            time: "09:30",
+                            event: "捷克克魯姆洛夫城堡",
+                            loc: "Státní hrad a zámek Český Krumlov",
+                            type: "sight",
+                            hours: "9.00 – 15.30 (周一閉館)",
+                            ticket: [{name: "中文遊記 - 城堡介紹", url: "https://www.leo-travel.idv.tw/45814/czech-cesky-krumlov-castle-guide"}],
+                            note: "捷克除布拉格城堡外最大的古堡，必看彩繪塔俯瞰小鎮全景。\n冬季城堡多處地區未開放，到時再決定是否買票上彩繪塔&參觀博物館(CZK280)"
+                        },
+                        {
+                            id: "1802",
+                            time: "12:00",
+                            event: "CK 小鎮午餐",
+                            loc: "Český Krumlov Old Town",
+                            type: "food",
+                            note: "建議在伏爾塔瓦河畔用餐，下午 13:30 前需啟程前往巴士站。"
+                        },
+                        {
+                            id: "1803",
+                            time: "14:00",
+                            event: "搭乘 FlixBus 前往布拉格",
+                            loc: "Autobusové nádraží Český Krumlov",
+                            type: "transport",
+                            note: `*票有加入app錢包\n1. 請提前 15 分鐘抵達巴士站。\n2. 車程約 3 小時，終點為布拉格 Florenc 站。`,
+                            ticket: [
+                                {
+                                    name: "FlixBus車票",
+                                    url:"https://drive.google.com/file/d/1EucXpj9Up9pHSBMfIiCPgRhWmA5L9J8t/view?usp=drive_link"
+                                }
+                            ]
+                        },
+                        {
+                            id: "1804",
+                            time: "17:00",
+                            event: "抵達布拉格 Florenc 站",
+                            loc: "Prague Main Bus Terminal (Florenc)",
+                            type: "transport",
+                            note: "抵達後建議搭乘計程車或路面電車前往飯店，約 10 分鐘路程。"
+                        },
+                        {
+                            id: "1805",
+                            time: "17:10",
+                            event: "帝國酒店 Check-in",
+                            loc: "Art Deco Imperial Hotel",
+                            type: "hotel",
+                            note: "這家飯店是世界級的歷史建築，大廳的陶瓷裝飾非常壯觀。",
+                            ticket: "https://drive.google.com/file/d/1IwX-XcgKfdIVtyb319InSfns-UooQDbz/view?usp=drive_link"
+                        },
+                        {
+                            id: "1806",
+                            time: "18:00",
+                            event: "布拉格晚餐",
+                            loc: "Prague Old Town",
+                            type: "food",
+                            note: "因 19:00 要看歌劇，建議在劇院附近簡單用餐或吃輕食。"
+                        },
+                        {
+                            id: "1807",
+                            time: "19:00",
+                            event: "布拉格國家劇院：《卡門》",
+                            loc: "National Theatre (Národní divadlo)",
+                            type: "music",
+                            hours: "19:00 開始",
+                            note: "1. 請著正式或整潔服裝入場。\n2. 演出包含中場休息，總長約 3 小時。",
+                            ticket: [
+                                {
+                                    name: "卡門 門票",
+                                    url:"https://drive.google.com/file/d/15QkruRFxibCttRCNPgTIVWS-MFUVVwMK/view?usp=drive_link"
+                                }
+                            ]
+                        }
                     ]
                 },
                 {
@@ -953,7 +1183,8 @@
                     spots: ["瑪麗亞廣場", "皇家啤酒屋", "慕尼黑王宮"],
                     food: ["德國豬腳 (Haxn)", "白香腸 (Weisswurst)", "一公升啤酒"],
                     shop: ["Rimowa 行李箱", "百靈油 (China Oel)", "DM藥妝"],
-                    tips: "地鐵票進站前務必在打票機打卡，否則視為逃票。"
+                    tips: "地鐵票進站前務必在打票機打卡，否則視為逃票。",
+                    restaurants: []
                 },
                 salzburg: {
                     title: "薩爾斯堡 Salzburg",
@@ -998,16 +1229,55 @@
                     spots: ["明信片觀景點", "古老鹽礦", "人骨教堂"],
                     food: ["烤鱒魚 (來自哈修塔特湖)", "奶油捲"],
                     shop: ["手工鹽罐", "木製工藝品"],
-                    tips: "遊客非常多，建議清晨或傍晚散步最舒服。"
+                    tips: "遊客非常多，建議清晨或傍晚散步最舒服。",
+                    restaurants: [
+                        { 
+                            name: "🐟 Seehotel Grüner Baum", 
+                            note: "最美湖畔露台，推薦現撈烤鱒魚。建議預約面湖位。",
+                            map: "https://www.google.com/maps/search/?api=1&query=Seehotel+Grüner+Baum+Hallstatt"
+                        },
+                        { 
+                            name: "🍴 Restaurant Im Kainz", 
+                            note: "Heritage Hotel 附設餐廳，品質穩定，炸牛排很道地。",
+                            map: "https://www.google.com/maps/search/?api=1&query=Restaurant+Im+Kainz+Hallstatt"
+                        },
+                        { 
+                            name: "🥨 Maislinger", 
+                            note: "當地人也愛的百年麵包店，推薦傳統扭結餅與小蛋糕。",
+                            map: "https://www.google.com/maps/search/?api=1&query=Bäckerei+Maislinger+Hallstatt"
+                        },
+                        { 
+                            name: "🍺 Brauhaus Lobisser", 
+                            note: "道地德奧酒館，有後花園。烤豬腳與啤酒的完美組合。",
+                            map: "https://maps.app.goo.gl/6PuNCk2J7mtSu3MAA"
+                        },
+                        { 
+                            name: "🍔 Karmez Kebap Cart", 
+                            note: "碼頭旁的超人氣小攤位，捲餅便宜又大份，適合湖邊野餐。",
+                            map: "https://www.google.com/maps/search/?api=1&query=Karmez+Kebap+Cart+Hallstatt"
+                        }
+                    ]
                 },
                 ck: {
                     title: "庫倫洛夫 CK",
                     img: "./img/ck.jpg",
                     intro: "波西米亞童話小鎮。伏爾塔瓦河呈S型蜿蜒流過，橘紅色的屋頂是這裡的標誌。",
-                    spots: ["彩繪塔", "城堡橋廊", "地窖餐廳"],
-                    food: ["地窖烤肉", "肉桂煙囪捲 (Trdelník)"],
+                    spots: ["彩繪塔", "城堡橋廊", "斗篷橋 (Cloak Bridge)", "地窖餐廳"],
+                    food: ["地窖烤肉", "肉桂煙囪捲 (Trdelník)", "雞蛋薄餅 (Palačinka)"],
                     shop: ["菠丹妮 (Botanicus) 手工皂", "刺蝟筆"],
-                    tips: "全城都是石板路，非常難拖行李，請輕裝簡行。"
+                    tips: "全城都是石板路，非常難拖行李，請輕裝簡行。",
+                    restaurants: [
+                        { 
+                            name: "🥩 Krčma Šatlava (經典地窖餐廳)", 
+                            note: "傳統捷克料理，環境像中世紀酒館。推薦：烤豬腳、洋蔥湯。室內暖氣足，適合冬天用餐。",
+                            map: "https://maps.app.goo.gl/bgJHtY3Nvqsgt65R9"
+                        },
+                        { 
+                            name: "🥨 MLS Crêperie (雞蛋薄餅/肉桂捲)", 
+                            note: "現場製作捷克傳統小吃 Trdelník (煙囪捲)，熱騰騰的肉桂香氣在冬天吃起來格外幸福。",
+                            map: "https://maps.app.goo.gl/unrwDzZY51CSi3CC8"
+                        },
+                    ]
                 },
                 prague: {
                     title: "布拉格 Prague",
@@ -1016,7 +1286,8 @@
                     spots: ["查理大橋", "天文鐘", "布拉格城堡"],
                     food: ["烤鴨佐紫甘藍", "皮爾森啤酒"],
                     shop: ["曼菲蘿 (Manufaktura) 啤酒花保養品", "水晶玻璃"],
-                    tips: "人多的地方(如查理大橋)請務必將背包背在前面，小心扒手。"
+                    tips: "人多的地方(如查理大橋)請務必將背包背在前面，小心扒手。",
+                    restaurants: []
                 },
                 budapest: {
                     title: "布達佩斯 Budapest",
@@ -1025,7 +1296,8 @@
                     spots: ["漁人堡", "國會大廈", "塞切尼溫泉"],
                     food: ["匈牙利牛肉湯 (Goulash)", "鵝肝料理"],
                     shop: ["紅椒粉 (Paprika)", "貴腐酒 (Tokaji)"],
-                    tips: "地鐵手扶梯速度非常快，搭乘時請握緊扶手。"
+                    tips: "地鐵手扶梯速度非常快，搭乘時請握緊扶手。",
+                    restaurants: []
                 },
                 vienna: {
                     title: "維也納 Vienna",
@@ -1034,7 +1306,8 @@
                     spots: ["霍夫堡", "熊布朗宮", "中央咖啡館"],
                     food: ["維也納炸牛排 (Schnitzel)", "薩赫蛋糕 (Sacher Torte)"],
                     shop: ["Manner 威化餅", "小紅帽咖啡豆"],
-                    tips: "週日商店幾乎全關，採買請避開週日。"
+                    tips: "週日商店幾乎全關，採買請避開週日。",
+                    restaurants: []
                 }
             };
     
@@ -1050,6 +1323,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 // 1. 初始化功能
                 renderItinerary();
+                renderSideTabs();
                 loadChecklist();
                 
                 // 2. 初始定位到今日行程
@@ -1115,19 +1389,23 @@
             }
     
             // ================= PLAN RENDERING =================
+            // 宣告目前選中的日期，預設為第一天
+            let currentDay = itineraryData[0].date; 
+
             function renderItinerary() {
                 const container = document.getElementById('itinerary-list');
                 let html = '';
                 
+                // 遍歷所有天數進行全量渲染 (一次顯示所有行程)
                 itineraryData.forEach((item, index) => {
                     let timelineNodes = [];
                     
-                    // 取得該日設定的 起訖時間 (若無設定，給予預設值)
+                    // 取得該日設定的 起訖時間
                     const departureTime = item.startTime || "09:00";
                     const returnTime = item.endTime || "20:00";
 
-                    // 1. 邏輯：自動加入「從飯店出發」 
-                    // 條件：不是第一天 (index > 0) 且 第一個行程不是「起飛」
+                    // 1. 自動加入「從飯店出發」
+                    // 條件：不是第一天 且 第一個行程不是「起飛」
                     if (index > 0 && !item.timeline[0].event.includes("起飛")) {
                         const prevHotel = itineraryData[index - 1].hotel;
                         timelineNodes.push({
@@ -1136,7 +1414,6 @@
                             event: `從 ${prevHotel} 出發`,
                             loc: prevHotel, 
                             type: "hotel_start",
-                            // 將當天的早餐資訊傳遞進去
                             breakfast: item.breakfast || "", 
                             ticket: "", note: ""
                         });
@@ -1145,12 +1422,12 @@
                     // 2. 加入主要行程事件
                     timelineNodes = timelineNodes.concat(item.timeline);
                     
-                    // 3. 邏輯：自動加入「回到飯店」 
+                    // 3. 自動加入「回到飯店」
                     // 條件：最後一個行程不是「搭機」
                     if (!item.timeline[item.timeline.length-1].event.includes("搭機")) {
                         timelineNodes.push({
                             id: "end_" + item.date.replace('/',''),
-                            time: returnTime, // 讀取 endTime
+                            time: returnTime, 
                             event: `回到 ${item.hotel}`, 
                             loc: item.hotel, 
                             type: "hotel_end",
@@ -1163,62 +1440,39 @@
                     timelineNodes.forEach((event, idx) => {
                         const isLast = idx === timelineNodes.length - 1;
                         
-                        // 設定圖示
-                        let icon = 'fa-circle';
-                        if (event.type === 'flight') icon = 'fa-plane';
-                        if (event.type === 'food') icon = 'fa-utensils';
-                        if (event.type === 'hotel' || event.type === 'hotel_end') icon = 'fa-bed';
-                        if (event.type === 'hotel_start') icon = 'fa-walking';
-                        if (event.type === 'transport') icon = 'fa-train';
-                        if (event.type === 'music') icon = 'fa-music';
-                        if (event.type === 'sight') icon = 'fa-camera';
+                        // 設定圖示邏輯
+                        const typeIcons = {
+                            flight: 'fa-plane',
+                            food: 'fa-utensils',
+                            hotel: 'fa-bed',
+                            hotel_end: 'fa-bed',
+                            hotel_start: 'fa-walking',
+                            transport: 'fa-train',
+                            music: 'fa-music',
+                            sight: 'fa-camera'
+                        };
+                        const icon = typeIcons[event.type] || 'fa-circle';
 
-                        // === 檢查連結圖示 ===
+                        // 處理連結標示
                         const hasStaticLink = !!event.ticket;
-                        
                         const customLinksRaw = localStorage.getItem('ticket_custom_links_' + event.id);
-                        let hasCustomLink = false;
-                        if (customLinksRaw && customLinksRaw !== '[]') {
-                            hasCustomLink = true;
-                        }
-                        
+                        const hasCustomLink = (customLinksRaw && customLinksRaw !== '[]');
                         const showLinkIcon = hasStaticLink || hasCustomLink;
                         const linkIconHtml = showLinkIcon ? '<i class="fas fa-link text-euro-secondary ml-1.5 text-xs"></i>' : '';
-                                            
-                        // === 處理備註顯示 (直接顯示版本) ===
+                        
+                        // 處理備註顯示
                         const localNote = localStorage.getItem('ticket_note_' + event.id);
-                        const staticNote = event.note || "";
-                        const finalNote = (localNote && localNote.trim() !== "") ? localNote : staticNote;
-
-                        // 如果有備註，產生一個小字區塊
+                        const finalNote = (localNote && localNote.trim() !== "") ? localNote : (event.note || "");
                         const noteBlockHtml = (finalNote && finalNote.trim() !== "") 
                             ? `<div class="text-[11px] text-gray-500 mt-1.5 flex items-start leading-relaxed bg-gray-50 p-2 rounded border-l-2 border-gray-200 whitespace-pre-wrap">
                                 <i class="fas fa-pen text-[9px] mt-1 mr-2 opacity-50"></i>
                                 <div class="flex-1">${finalNote}</div>
-                            </div>` 
-                            : '';
+                            </div>` : '';
 
-                        // 地圖連結
                         const mapIconHtml = getMapLinkHtml(event.loc);
-                        
-                        // 判斷是否顯示「明細」按鈕
                         const showBtn = (event.type !== 'hotel_start');
-                        const eventId = event.id;
-
-                        // 處理營業時間 HTML
-                        const hoursHtml = event.hours 
-                            ? `<div class="text-[10px] text-gray-400 flex items-center mt-0.5">
-                                <i class="far fa-clock mr-1 text-[9px]"></i>${event.hours}
-                            </div>` 
-                            : '';
-
-
-                        // 新增：處理早餐顯示 HTML
-                        const breakfastHtml = (event.type === 'hotel_start' && event.breakfast) 
-                            ? `<div class="text-[10px] text-euro-secondary flex items-center mt-1 font-bold">
-                                <i class="fas fa-coffee mr-1 text-[9px]"></i>早餐：${event.breakfast}
-                            </div>` 
-                            : '';
+                        const hoursHtml = event.hours ? `<div class="text-[10px] text-gray-400 flex items-center mt-0.5"><i class="far fa-clock mr-1 text-[9px]"></i>${event.hours}</div>` : '';
+                        const breakfastHtml = (event.type === 'hotel_start' && event.breakfast) ? `<div class="text-[10px] text-euro-secondary flex items-center mt-1 font-bold"><i class="fas fa-coffee mr-1 text-[9px]"></i>早餐：${event.breakfast}</div>` : '';
 
                         timelineHtml += `
                         <div class="flex gap-3 relative">
@@ -1227,33 +1481,24 @@
                                 <i class="fas ${icon}"></i>
                             </div>
                             <div class="flex-1 pb-6">
-                                <span class="text-xs font-bold text-gray-400 font-mono bg-gray-100 px-1 rounded inline-block mb-1">
-                                    ${event.time}
-                                </span>
+                                <span class="text-xs font-bold text-gray-400 font-mono bg-gray-100 px-1 rounded inline-block mb-1">${event.time}</span>
                                 <div class="flex justify-between items-start gap-2">
                                     <div>
-                                        <h4 class="text-base font-bold text-gray-800 leading-tight">
-                                            ${event.event} ${mapIconHtml} ${linkIconHtml}
-                                        </h4>
-                                        ${breakfastHtml}
-                                        ${hoursHtml}
-                                        ${noteBlockHtml}
+                                        <h4 class="text-base font-bold text-gray-800 leading-tight">${event.event} ${mapIconHtml} ${linkIconHtml}</h4>
+                                        ${breakfastHtml}${hoursHtml}${noteBlockHtml}
                                     </div>
-                                    ${ showBtn ? 
-                                    `<button onclick="openDetailModal('${eventId}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">
-                                        明細
-                                    </button>` 
-                                    : ''}
+                                    ${ showBtn ? `<button onclick="openDetailModal('${event.id}', '${event.event}')" class="text-xs border border-euro-primary text-euro-primary px-2 py-0.5 rounded hover:bg-euro-primary hover:text-white transition flex-shrink-0 whitespace-nowrap self-start mt-0.5">明細</button>` : ''}
                                 </div>
                             </div>
                         </div>`;
                     });
 
+                    // 設定大卡片的 ID 與外觀
                     const hotelMapLinkHtml = getMapLinkHtml(item.hotel);
                     const cardId = `card-${item.date.replace('/', '-')}`;
 
                     html += `
-                    <div id="${cardId}" class="bg-white rounded-xl euro-shadow overflow-hidden">
+                    <div id="${cardId}" class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-12 scroll-mt-24">
                         <div class="bg-euro-primary/5 p-4 border-b border-euro-light flex justify-between items-center">
                             <div class="flex items-center gap-3">
                                 <div class="bg-euro-secondary text-white rounded-lg px-3 py-1 text-center min-w-[55px]">
@@ -1265,8 +1510,8 @@
                                     <div class="text-xs text-gray-500">${item.day}</div>
                                 </div>
                             </div>
-                            <div class="text-xs text-gray-600 font-bold flex items-center bg-white px-3 py-1.5 rounded-full border border-gray-100 shadow-sm">
-                            <i class="fas fa-bed mr-1.5 text-euro-secondary"></i> ${item.hotel.split(' ')[0]} ${hotelMapLinkHtml}
+                            <div class="text-xs text-gray-600 font-bold flex items-center bg-white px-3 py-1.5 rounded-full shadow-sm">
+                                <i class="fas fa-bed mr-1.5 text-euro-secondary"></i> ${item.hotel.split(' ')[0]} ${hotelMapLinkHtml}
                             </div>
                         </div>
                         <div class="p-5 pt-6">
@@ -1274,9 +1519,10 @@
                         </div>
                     </div>`;
                 });
+                
                 container.innerHTML = html;
             }
-
+                        
             // ================= MODALS =================
             let currentDetailId = null;
     
@@ -1528,6 +1774,79 @@
                 } else {
                     console.log("找不到今天的行程卡片: " + todayId);
                 }
+            }
+
+            function goToUrl(url) {
+                window.open(url, '_blank');
+            }
+
+            function renderSideTabs() {
+                const tabsContainer = document.getElementById('side-date-tabs');
+                if (!tabsContainer) return;
+                tabsContainer.innerHTML = '';
+
+                itineraryData.forEach((item) => {
+                    const dateBtn = document.createElement('button');
+                    const cardId = `card-${item.date.replace('/', '-')}`;
+                    
+                    // 加上 date-tab-btn 類別與 data-date 屬性
+                    dateBtn.className = "date-tab-btn text-left py-3 px-1 text-sm transition-all border-l-2 -ml-[18px] pl-4 whitespace-nowrap";
+                    dateBtn.setAttribute('data-date', cardId); 
+                    
+                    dateBtn.innerHTML = `
+                        <span class="block text-[9px] uppercase tracking-wider opacity-60">${item.day}</span>
+                        <span class="text-base font-bold">${item.date}</span>
+                    `;
+                    
+                    dateBtn.onclick = () => {
+                        const target = document.getElementById(cardId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    };
+                    tabsContainer.appendChild(dateBtn);
+                });
+                
+                // 初始化追蹤功能
+                initScrollSpy();
+            }
+
+            function initScrollSpy() {
+                const options = {
+                    root: null,
+                    // rootMargin: '-10% 0px -70% 0px', // 觸發範圍：當卡片到達螢幕上方 10% 時
+                    rootMargin: '-20% 0px -85% 0px',
+                    threshold: 0
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const id = entry.target.id;
+                            
+                            // 1. 移除所有按鈕的 active 樣式
+                            document.querySelectorAll('.date-tab-btn').forEach(btn => {
+                                btn.classList.remove('active');
+                            });
+
+                            // 2. 幫當前日期按鈕加上 active
+                            const activeBtn = document.querySelector(`.date-tab-btn[data-date="${id}"]`);
+                            if (activeBtn) {
+                                activeBtn.classList.add('active');
+                                
+                                // 3. 進階：如果日期很多，讓側邊導覽列自動捲動到該按鈕位置
+                                activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            }
+                        }
+                    });
+                }, options);
+
+                // 監控所有行程卡片
+                itineraryData.forEach(item => {
+                    const cardId = `card-${item.date.replace('/', '-')}`;
+                    const el = document.getElementById(cardId);
+                    if (el) observer.observe(el);
+                });
             }
         </script>
     </body>
