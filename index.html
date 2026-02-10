@@ -704,7 +704,7 @@
             // ================= ITINERARY DATA =================
             const itineraryData = [
                 {
-                    date: "2/11", day: "週三", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", 
+                    date: "2/11", day: "週三", city: "慕尼黑 Munich", hotel: "Metropol by Maier Privathotels", 
                     hotelTicket: "https://drive.google.com/file/d/1STKYkF4877aFvAF0ABy_lfCr105BU1SZ/view?usp=drive_link",
                     startTime: "09:00", endTime: "20:30",
                     timeline: [
@@ -722,12 +722,78 @@
                     ]
                 },
                 {
-                    date: "2/12", day: "週四", city: "慕尼黑", hotel: "Metropol by Maier Privathotels", 
-                    startTime: "09:00", endTime: "20:40",
+                    date: "2/12",
+                    day: "週四",
+                    city: "慕尼黑 Munich",
+                    hotel: "Metropol by Maier Privathotels", 
+                    startTime: "08:00",
+                    endTime: "19:00",
+                    note: "今日為全步行行程，景點密集度極高。核心重點是 11:00 準時回到瑪麗恩廣場觀看木偶鐘，其餘時間可隨意調整各教堂的停留長短。",
                     timeline: [
-                        { id: "1201", time: "09:00", event: "瑪麗亞廣場", loc: "Marienplatz", type: "sight", ticket: "", note: "" },
-                        { id: "1202", time: "12:00", event: "皇家啤酒屋午餐", loc: "Hofbräuhaus München", type: "food", ticket: "", note: "" },
-                        { id: "1203", time: "14:00", event: "慕尼黑王宮", loc: "Munich Residenz", type: "sight", ticket: "", note: "" }
+                        {
+                            id: "1201",
+                            time: "08:00",
+                            event: "卡爾廣場：老城散策起點",
+                            loc: "Karlsplatz (Stachus)",
+                            type: "sight",
+                            note: "從卡爾門 (Karlstor) 進入行人徒步區。這裡是慕尼黑最熱鬧的入口，早晨人潮較少，非常適合幫長輩在噴泉廣場拍下第一張紀念照。"
+                        },
+                        {
+                            id: "1202",
+                            time: "09:20",
+                            event: "聖米歇爾教堂：摸野豬求財運",
+                            loc: "St. Michael, Munich",
+                            type: "sight",
+                            note: "教堂外右側有著名的『野豬與大魚銅像』。別忘了提醒長輩摸摸豬鼻子和魚身體祈求財運！內部無彌撒限制時，可自由參觀精美的白色灰泥裝飾。"
+                        },
+                        {
+                            id: "1203",
+                            time: "09:50",
+                            event: "聖母教堂：尋找惡魔腳印",
+                            loc: "Frauenkirche, Munich",
+                            type: "sight",
+                            note: "慕尼黑的地標雙塔建築。進入後請在地上尋找著名的『惡魔腳印』。若想俯瞰市景，此處有電梯直達塔頂（需另購票），對長輩膝蓋最友善。"
+                        },
+                        {
+                            id: "1204",
+                            time: "10:30",
+                            event: "聖彼得教堂：老城最古老地標",
+                            loc: "St. Peter's Church, Munich",
+                            type: "sight",
+                            note: "位於廣場旁。若體力極佳可挑戰 306 階樓梯登塔拍攝新市政廳。若想省力，進教堂欣賞華麗的巴洛克金飾即可，參觀後剛好走往對面的瑪麗恩廣場。"
+                        },
+                        {
+                            id: "1205",
+                            time: "10:45",
+                            event: "瑪麗恩廣場：卡位木偶音樂鐘",
+                            loc: "Marienplatz / Neues Rathaus",
+                            type: "sight",
+                            note: "【11:00 準時表演】建議提前 15 分鐘找好位置仰望新市政廳。表演時長約 10 分鐘，結束後可進入新市政廳中庭參觀哥德式迴廊。"
+                        },
+                        {
+                            id: "1206",
+                            time: "12:00",
+                            event: "午餐：穀物市場美食探索",
+                            loc: "Viktualienmarkt",
+                            type: "food",
+                            note: "老城區的靈魂廚房。推薦在市場露天座位嘗試傳統巴伐利亞白香腸、椒鹽捲餅或新鮮的水果點心。這裡是感受在地生活氣息的最佳地點。"
+                        },
+                        {
+                            id: "1207",
+                            time: "14:00",
+                            event: "慕尼黑王宮：德國最大宮殿",
+                            loc: "Munich Residenz",
+                            type: "sight",
+                            note: "（17:00 關門）必看：古物陳列館 (Antiquarium)。這座宮殿非常龐大，建議選重點廳室參觀。內部設有衣帽間與電梯，可以讓長輩在下午行程中慢慢走、慢慢逛。"
+                        },
+                        {
+                            id: "1208",
+                            time: "17:00",
+                            event: "晚餐：皇家啤酒屋 (HB)",
+                            loc: "Hofbräuhaus am Platzl",
+                            type: "food",
+                            note: "慕尼黑名氣最大的啤酒屋，內有現場樂隊演奏。必點豬腳 (Haxe) 與烤鴨腿。因人潮眾多，若沒預約建議一開門就進入，氣氛熱鬧甚至有點吵雜，非常在地。"
+                        }
                     ]
                 },
                 {
