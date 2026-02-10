@@ -797,12 +797,94 @@
                     ]
                 },
                 {
-                    date: "2/13", day: "週五", city: "薩爾斯堡", hotel: "Altstadt Hotel Hofwirt", startTime: "09:00",
+                    date: "2/13",
+                    day: "週五",
+                    city: "慕尼黑 → 薩爾斯堡",
+                    startTime: "07:30",
+                    endTime: "21:30",
+                    hotel: "Altstadt Hotel Hofwirt",
+                    hotelTicket: "https://drive.google.com/file/d/1aMuD0HNtbdzqGgrhj53rK59nBpagCRl4/view?usp=drive_link",
+                    hotelNote: "今日重點：上午寧芬堡，下午跨國火車。提醒：拜揚邦票於 09:00 生效，在那之前搭車需另購票。抵達薩爾斯堡後，請務必先在火車站領取薩爾斯堡卡。",
                     timeline: [
-                        { id: "1301", time: "09:00", event: "搭火車往薩爾斯堡", loc: "Munich Central Station", type: "transport", ticket: "", note: "車票在 Apple Wallet" },
-                        { id: "1302", time: "13:00", event: "舊城區漫步", loc: "Getreidegasse", type: "sight", ticket: "", note: "" }
-                    ],
-                    hotelTicket: "https://drive.google.com/file/d/1aMuD0HNtbdzqGgrhj53rK59nBpagCRl4/view?usp=drive_link"
+                        {
+                            id: "1301",
+                            time: "07:30",
+                            event: "車站早餐與行李寄放",
+                            loc: "Munich Hbf",
+                            type: "food",
+                            note: "【早餐推薦】Rischart am Hauptbahnhof。這是慕尼黑最經典的烘焙坊。推薦點一份『經典德式早餐』或熱騰騰的椒鹽捲餅 (Pretzel) 配拿鐵。用餐後，先將大行李鎖在車站的自動置物櫃 (Lockers)，這樣下午回來取行李搭車最順手。"
+                        },
+                        {
+                            id: "1302",
+                            time: "09:00",
+                            event: "拜揚邦票正式生效",
+                            loc: "Tram 17 站牌 (車站北側)",
+                            type: "transport",
+                            note: "邦票啟用！從火車站北側搭乘 17 號路面電車直達寧芬堡宮。此段車資已包含在邦票內，不需額外買票。查票時請備妥手機 QR Code 與全體成員護照。"
+                        },
+                        {
+                            id: "1303",
+                            time: "10:00",
+                            event: "寧芬堡宮 (Schloss Nymphenburg)",
+                            loc: "Schloss Nymphenburg",
+                            type: "sight",
+                            note: "【四大參觀重點】1.石廳：洛可可裝飾的極致。 2.美人畫廊：國王私藏的 36 位美女。 3.路德維希二世誕生房：童話國王出生地。 4.馬車博物館：極其奢華的金黃色皇室馬車，長輩必看！"
+                        },
+                        {
+                            id: "1304",
+                            time: "12:30",
+                            event: "午餐：寧芬堡附近美食 (可選)",
+                            loc: "Schlosswirtschaft Schwaige / Palmenhaus",
+                            type: "food",
+                            note: "推薦在宮殿南翼的 Schwaige 用餐，氣氛優雅；或在花園溫室 Palmenhaus 簡單吃些輕食。若想留回火車站吃，此處也有簡單的熱狗攤。"
+                        },
+                        {
+                            id: "1305",
+                            time: "14:30",
+                            event: "返回慕尼黑火車站與補給",
+                            loc: "Munich Hbf",
+                            type: "food",
+                            note: "【車站輕食建議】回站領取行李。火車不附餐，建議在 Le Crobag 買些法式三明治，或到 Edeka 超市買現切水果盒帶上車。準備好後前往月台。"
+                        },
+                        {
+                            id: "1306",
+                            time: "15:40",
+                            event: "月台卡位 (RE 5 火車)",
+                            loc: "Munich Hbf",
+                            type: "transport",
+                            note: "【行李提醒】提早 15 分鐘到月台。RE 火車不對號，請尋找車門上有『腳踏車/行李標誌』的車廂，這類空間通常有較大的行李放置區。"
+                        },
+                        {
+                            id: "1307",
+                            time: "15:55",
+                            event: "火車：RE 前往薩爾斯堡",
+                            loc: "Munich Hbf → Salzburg Hbf",
+                            type: "transport",
+                            note: "車程約 1 小時 47 分。請坐『行進方向右手邊』，經過 Rosenheim 站後可遠眺基姆湖 (Chiemsee) 絕美湖景。"
+                        },
+                        {
+                            id: "1308",
+                            time: "17:42",
+                            event: "抵達薩爾斯堡車站",
+                            loc: "Salzburg Hbf Tourist Info",
+                            type: "transport",
+                            ticket: [
+                                {
+                                    name: "薩爾斯堡卡72hr兌換憑證",
+                                    url: "https://drive.google.com/file/d/15jNvdyTQ37kfhtUG9MzZgIt2V68KbJ6c/view?usp=drive_link"
+                                }
+                            ],
+                            note: "【領取薩爾斯堡卡】出月台後前往旅客服務中心領卡。此卡可用於搭乘市區公車前往飯店。開卡後，今晚的所有大眾運輸與部分夜間景點皆免費。"
+                        },
+                        {
+                            id: "1309",
+                            time: "19:30",
+                            event: "晚餐與薩爾斯堡散步",
+                            loc: "Old Town Salzburg",
+                            type: "food",
+                            note: "【晚餐】推薦 Bärenwirt (老牌炸雞) 或 St. Peter Stiftskulinarium。【散步】持卡免費搭纜車上要塞俯瞰夜景，或在莫札特廣場漫步感受音樂之都氛圍。"
+                        }
+                    ]
                 },
                 {
                     date: "2/14", day: "週六", city: "薩爾斯堡", 
@@ -1840,7 +1922,53 @@
                     food: ["德國豬腳 (Haxn)", "白香腸 (Weisswurst)", "一公升啤酒"],
                     shop: ["Rimowa 行李箱", "百靈油 (China Oel)", "DM藥妝"],
                     tips: "地鐵票進站前務必在打票機打卡，否則視為逃票。",
-                    restaurants: []
+                    restaurants: [
+                        {
+                            name: "🥨 Schneider Bräuhaus im Tal (傳統白香腸)",
+                            note: "最正宗的巴伐利亞早餐聖地。必點白香腸 (Weißwurst) 配甜芥末與椒鹽捲餅。傳統習俗白香腸不過中午，環境是溫馨的木質調，非常適合體驗在地文化。",
+                            loc: "https://maps.google.com/?cid=16517426824490394725&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "☕ Café Luitpold (百年宮廷咖啡廳)",
+                            note: "1888 年開業，裝潢氣派華麗。提供精緻的歐式早餐盤、煙燻鮭魚與手工蛋糕。服務優質且環境舒適，適合想在像皇宮般的環境中優雅用餐的長輩。",
+                            loc: "https://maps.google.com/?cid=13934334432696399082&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🍩 Schmalznudel - Café Frischhut (現炸油餅老店)",
+                            note: "位於穀物市場旁。主打現炸的德式油餅 (Schmalznudel)，口感紮實且帶有麵粉香氣，配上一杯黑咖啡非常道地。店內充滿古樸的德式風情。",
+                            loc: "https://maps.google.com/?cid=1533461004508060958&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🏛️ Woerner's am Marienplatz (廣場景觀首選)",
+                            note: "位於瑪麗恩廣場正對面。二樓靠窗位子可以平視新市政廳，視野極佳。提供各式德式烘焙麵包與拿鐵，點餐直觀且地理位置對後續行程最方便。",
+                            loc: "https://maps.google.com/?cid=6683105388604463088&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🍴 Ratskeller München (市政廳地窖餐廳)",
+                            note: "位於新市政廳地下室，擁有極為壯觀的哥德式拱頂與精緻壁畫。環境寬敞且氣息莊重，推薦脆皮豬腳與德式酸菜。雖然在景點中心，但品質極佳且設有電梯，是長輩用餐最舒適的選擇。",
+                            loc: "https://maps.google.com/?cid=16898671982064288330&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🍖 Haxnbauer im Scholastikahaus (豬腳名店)",
+                            note: "慕尼黑公認『烤豬腳』第一名。門口就能看到整排豬腳在火爐上慢烤，外皮極致酥脆。環境相較於啤酒屋更像正式餐廳，適合想專心享受美食、不喜歡太過吵雜環境的旅人。",
+                            loc: "https://maps.google.com/?cid=7797826227648288280&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🍺 Augustiner am Dom (在地人最愛啤酒餐廳)",
+                            note: "位於聖母教堂旁。當地人心中 Augustiner 才是慕尼黑最好的啤酒。餐廳氛圍傳統且溫馨，餐點份量十足，推薦牛肉湯與巴伐利亞拼盤。這裡的觀光客較少，更有在地感。",
+                            loc: "https://maps.google.com/?cid=2437215477892610824&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🥘 Wirtshaus Ayingers (優雅德式小館)",
+                            note: "就在皇家啤酒屋 (HB) 對面，但環境安靜且精緻許多。提供高品質的巴伐利亞料理與自家釀造啤酒。如果您到 HB 發現太過擁擠吵雜，轉過身來這裡絕對是讓長輩放鬆用餐的最佳替代方案。",
+                            loc: "https://maps.google.com/?cid=5431519180913318803&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        },
+                        {
+                            name: "🥗 Caspar Plautz (穀物市場創意馬鈴薯)",
+                            note: "位於穀物市場內的熱門小攤。將傳統馬鈴薯料理做得非常精緻多變，適合中午不想吃太重口味肉食的選擇。可以直接坐在市場的露天座位，享受悠閒的午後陽光與在地氛圍。",
+                            loc: "https://maps.google.com/?cid=424078836582138348&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQ"
+                        }
+                    ]
                 },
                 salzburg: {
                     title: "薩爾斯堡 Salzburg",
